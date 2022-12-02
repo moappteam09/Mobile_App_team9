@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--문답시 뭘 선택했는지 그 태그를 리사이클러뷰로 보여주기위한 뷰홀더 레이아웃-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/select_what"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="14dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/check_image"
+        android:src="@drawable/check"
+        android:maxHeight="12dp"
+        android:maxWidth="12dp"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="2dp"/>
+
+    <TextView
+        android:id="@+id/check_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+
+</LinearLayout>

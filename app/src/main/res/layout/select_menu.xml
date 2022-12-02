@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--문답시 선택한 내용을 바탕으로 메뉴를 표시해주는 페이지-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    여기에는 문답시 선택한 태그?들(뭘 선택했는지 나타남)-->
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:android = "http://schemas.android.com/apk/res/android"
+        android:id="@+id/select_menu_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <!--전체 메뉴 보기-->
+        <Button
+            android:id="@+id/watchAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_round"
+            android:text="전체" />
+        <!--햄버거 메뉴만 보기-->
+        <Button
+            android:id="@+id/watchHam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_round"
+            android:text="햄버거" />
+        <!--사이드 메뉴만 보기-->
+        <Button
+            android:id="@+id/watchSide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_round"
+            android:text="사이드" />
+        <!--음료 메뉴만 보기-->
+        <Button
+            android:id="@+id/watchBev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_round"
+            android:text="음료" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/layout_border">
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="선택한 메뉴"
+        android:textSize="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/layout_border">
+
+        <!--여기다가 메뉴 선택한거 넣어야함-->
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_buy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="주문하기"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:background="@drawable/border_round_orange"/>
+    </LinearLayout>
+
+</LinearLayout>
