@@ -18,12 +18,12 @@ class MainActivity : AppCompatActivity() {
 
         val secondVisit = findViewById<Button>(R.id.main_btn2)
         secondVisit.setOnClickListener{
-            val intent = Intent(this, EnterPhoneNumber::class.java)
+            val intent = Intent(this, ChoosePersonalMenu::class.java)
             startActivity(intent)
         }
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
         normalKiosk.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ShowMenu::class.java)
             startActivity(intent)
         }
     }

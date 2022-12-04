@@ -44,7 +44,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:gravity="center">
-        <Button
+        <android.widget.Button
             android:text="010"
             android:textSize="20dp"
             android:layout_width="100dp"
@@ -57,7 +57,7 @@
             android:textSize="60dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
-        <Button
+        <android.widget.Button
             android:text="1234"
             android:textSize="20dp"
             android:layout_width="100dp"
@@ -70,7 +70,7 @@
             android:textSize="60dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
-        <Button
+        <android.widget.Button
             android:text="5678"
             android:textSize="20dp"
             android:layout_width="100dp"
@@ -78,7 +78,7 @@
             android:background="@drawable/border_round"/>
     </LinearLayout>
 
-    <Button
+    <android.widget.Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="전화번호 입력"
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center">
-        <Button
+        <android.widget.Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="신용/체크카드"
@@ -111,7 +111,7 @@
             android:textStyle="bold"
             android:layout_marginRight="20dp"
             android:background="@drawable/border_round_black"/>
-        <Button
+        <android.widget.Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="상품권"

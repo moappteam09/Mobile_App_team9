@@ -10,12 +10,18 @@
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/drawable/border_round_orange.xml" value="0.199" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/drawable/button_effect.xml" value="0.135" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/activity_main.xml" value="0.2726449275362319" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/check_list.xml" value="0.3640625" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/choice_membership.xml" value="0.3640625" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/choice_menu.xml" value="0.36302083333333335" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/choice_patty.xml" value="0.33" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/choice_taste.xml" value="0.36302083333333335" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/item_layout.xml" value="0.3640625" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/item_layout_plus.xml" value="0.3640625" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/main_page.xml" value="0.33" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/payment_layout.xml" value="0.3640625" />
         <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/phone_number.xml" value="0.22" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/select_menu.xml" value="0.3640625" />
+        <entry key="..\:/Programming Languages/Android_projects/tp1/app/src/main/res/layout/select_what_viewholder.xml" value="0.3640625" />
       </map>
     </option>
   </component>

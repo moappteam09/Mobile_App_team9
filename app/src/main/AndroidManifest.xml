@@ -26,9 +26,9 @@
         <activity android:name=".ChooseTaste" android:label="ChooseTaste"/>
         <activity android:name=".ChoosePersonalMenu" android:label="ChoosePersonalMenu"/>
         <activity android:name=".EnterPhoneNumber" android:label="EnterPhoneNumber"/>
-        <activity
-            android:name=".PaymentActivity"
-            android:label="PaymentActivity"/>
+        <activity android:name=".PaymentActivity" android:label="PaymentActivity"/>
+        <activity android:name=".CheckSelectedMenu" android:label="CheckSelectedMenu"/>
+        <activity android:name=".ShowMenu" android:label="ShowMenu"/>
     </application>
 
 </manifest>
