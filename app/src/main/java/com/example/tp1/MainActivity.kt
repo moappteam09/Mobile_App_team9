@@ -14,8 +14,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
         //DB연결 확인용 코드
-        database = Firebase.database.reference
-        database.child("Test01").setValue("success!")
+//        database = Firebase.database.reference
+//        database.child("Test01").setValue("success!")
+
         val firstVisit = findViewById<Button>(R.id.main_btn1)
         firstVisit.setOnClickListener{
             val intent = Intent(this, ChoosePatty::class.java)

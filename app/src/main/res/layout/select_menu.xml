@@ -6,15 +6,33 @@
     android:orientation="vertical">
 
     <!--    여기에는 문답시 선택한 태그?들(뭘 선택했는지 나타남)-->
-    <androidx.recyclerview.widget.RecyclerView
-        xmlns:android = "http://schemas.android.com/apk/res/android"
-        android:id="@+id/select_menu_recyclerView"
+    <!--    드롭다운 버튼으로 바꾸기 위해 리사이클러뷰 제거-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        xmlns:android = "http://schemas.android.com/apk/res/android"-->
+<!--        android:id="@+id/select_menu_recyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginLeft="30dp"-->
+<!--        android:layout_marginRight="30dp"/>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+        <Spinner
+            android:id="@+id/spin_taste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <Spinner
+            android:id="@+id/spin_patty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
