@@ -29,9 +29,9 @@ class ShowMenu  : AppCompatActivity() {
 
         //스피너 어댑터에 연결해주기
         spinner_taste.adapter = ArrayAdapter.createFromResource(this, R.array.taste, android.R.layout.simple_spinner_item)
-        binding.spinTaste.setSelection(patty!!.toInt())
+        binding.spinTaste.setSelection(taste!!.toInt())
         spinner_patty.adapter = ArrayAdapter.createFromResource(this, R.array.patty, android.R.layout.simple_spinner_item)
-        binding.spinPatty.setSelection(taste!!.toInt())
+        binding.spinPatty.setSelection(patty!!.toInt())
 
         val order = findViewById<Button>(R.id.btn_buy)  //주문하기 버튼
         order.setOnClickListener{
