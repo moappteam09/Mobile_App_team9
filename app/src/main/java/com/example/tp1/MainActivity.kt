@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val secondVisit = findViewById<Button>(R.id.main_btn2)
         secondVisit.setOnClickListener{
-            val intent = Intent(this, ChoosePersonalMenu::class.java)
+            val intent = Intent(this, EnterPhoneNumber::class.java)
             startActivity(intent)
         }
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
