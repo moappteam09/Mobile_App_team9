@@ -17,6 +17,8 @@ class ShowMenu  : AppCompatActivity() {
         val binding = SelectMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         var inform_ham = intent.getStringExtra("Patty_and_Taste")
+        if (inform_ham.isNullOrEmpty())
+            inform_ham = "0 0"
         var patty = inform_ham?.slice(IntRange(0,0))
         var taste = inform_ham?.slice(IntRange(2,2))
         Log.d("Data", "${inform_ham}")

@@ -14,19 +14,19 @@ class ChooseTaste : AppCompatActivity() {
         val tasteSweet = findViewById<Button>(R.id.choice_taste_sweet)
         tasteSweet.setOnClickListener{
             val intent = Intent(this, ShowMenu::class.java)
-            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "0")
+            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "1")
             startActivity(intent)
         }
         val tasteSpicy = findViewById<Button>(R.id.choice_taste_spicy)
         tasteSpicy.setOnClickListener{
             val intent = Intent(this, ShowMenu::class.java)
-            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "1")
+            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "2")
             startActivity(intent)
         }
         val tastePlain = findViewById<Button>(R.id.choice_taste_plain)
         tastePlain.setOnClickListener{
             val intent = Intent(this, ShowMenu::class.java)
-            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "2")
+            intent.putExtra("Patty_and_Taste", "${patty_and_taste}" +" " +  "3")
             startActivity(intent)
         }
     }

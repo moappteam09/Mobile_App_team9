@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="patty">
+        <item>전체</item>
         <item>소</item>
         <item>돼지</item>
         <item>닭</item>
         <item>기타</item>
     </string-array>
     <string-array name="taste">
+        <item>전체</item>
         <item>달콤한맛</item>
         <item>매콤한맛</item>
         <item>담백한맛</item>

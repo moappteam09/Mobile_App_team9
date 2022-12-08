@@ -13,25 +13,25 @@ class ChoosePatty : AppCompatActivity() {
         val pattyCow = findViewById<Button>(R.id.choice_patty_cow)
         pattyCow.setOnClickListener{
             val intent = Intent(this, ChooseTaste::class.java)
-            intent.putExtra("Patty", "0")
+            intent.putExtra("Patty", "1")
             startActivity(intent)
         }
         val pattyPig = findViewById<Button>(R.id.choice_patty_pig)
         pattyPig.setOnClickListener{
             val intent = Intent(this, ChooseTaste::class.java)
-            intent.putExtra("Patty", "1")
+            intent.putExtra("Patty", "2")
             startActivity(intent)
         }
         val pattyChicken = findViewById<Button>(R.id.choice_patty_chicken)
         pattyChicken.setOnClickListener{
             val intent = Intent(this, ChooseTaste::class.java)
-            intent.putExtra("Patty", "2")
+            intent.putExtra("Patty", "3")
             startActivity(intent)
         }
         val pattySubstitute = findViewById<Button>(R.id.choice_patty_substitute)
         pattySubstitute.setOnClickListener{
             val intent = Intent(this, ChooseTaste::class.java)
-            intent.putExtra("Patty", "3")
+            intent.putExtra("Patty", "4")
             startActivity(intent)
         }
     }
