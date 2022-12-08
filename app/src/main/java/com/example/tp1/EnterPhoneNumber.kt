@@ -12,6 +12,8 @@ class EnterPhoneNumber : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.phone_number)
 
+        val whereFrom = intent.getIntExtra("whereFrom", 0)
+
         var numbers: String = ""
         val numView1: TextView = findViewById<TextView>(R.id.phone_number_numbers2)
         val numView2: TextView = findViewById<TextView>(R.id.phone_number_numbers3)
@@ -29,10 +31,14 @@ class EnterPhoneNumber : AppCompatActivity() {
         btns.add(findViewById<Button>(R.id.phone_number_btns_btn9))
         btns.add(findViewById<Button>(R.id.phone_number_btns_del))
         fun checkDone() {
+            lateinit var intent: Intent
             val length = numbers.length
             if (length == 8) {
-                val intent = Intent(this, CheckSelectedMenu::class.java)
-                intent.putExtra("pNumber", numbers)
+                if (whereFrom == 0)
+                    intent = Intent(this, CheckSelectedMenu::class.java)
+                else
+                    intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("numbers", numbers)
                 startActivity(intent)
             }
         }

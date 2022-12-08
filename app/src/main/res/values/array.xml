@@ -4,6 +4,7 @@
         <item>소</item>
         <item>돼지</item>
         <item>닭</item>
+        <item>기타</item>
     </string-array>
     <string-array name="taste">
         <item>달콤한맛</item>
