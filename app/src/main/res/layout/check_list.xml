@@ -21,7 +21,7 @@
         android:background="@drawable/border_round"
         android:layout_marginHorizontal="40dp"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="350dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/check_list_orderbtn"
