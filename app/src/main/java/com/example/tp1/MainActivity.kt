@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val secondVisit = findViewById<Button>(R.id.main_btn2)
         secondVisit.setOnClickListener{
             val intent = Intent(this, EnterPhoneNumber::class.java)
+            intent.putExtra("whereFrom", 0) // 전화번호 레이아웃 재사용 위함 | 0: 기존 고객, 1: 새로운 고객
             startActivity(intent)
         }
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
