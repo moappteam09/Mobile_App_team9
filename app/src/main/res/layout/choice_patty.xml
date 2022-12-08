@@ -68,7 +68,7 @@
         android:id="@+id/choice_patty_substitute"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="대체육"
+        android:text="기타"
         android:textSize="20dp"
         android:textColor="@drawable/text_effect"
         android:background="@drawable/button_effect"

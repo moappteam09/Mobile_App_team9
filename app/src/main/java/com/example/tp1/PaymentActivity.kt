@@ -9,6 +9,6 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = PaymentLayoutBinding.inflate(layoutInflater)
-        setContentView(R.layout.payment_layout)
+        setContentView(binding.root)
     }
 }
