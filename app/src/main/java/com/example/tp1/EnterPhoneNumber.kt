@@ -28,6 +28,14 @@ class EnterPhoneNumber : AppCompatActivity() {
         btns.add(findViewById<Button>(R.id.phone_number_btns_btn8))
         btns.add(findViewById<Button>(R.id.phone_number_btns_btn9))
         btns.add(findViewById<Button>(R.id.phone_number_btns_del))
+        fun checkDone() {
+            val length = numbers.length
+            if (length == 8) {
+                val intent = Intent(this, CheckSelectedMenu::class.java)
+                intent.putExtra("pNumber", numbers)
+                startActivity(intent)
+            }
+        }
         fun printNum() {
             val length = numbers.length
             if (length > 4) {
@@ -44,6 +52,7 @@ class EnterPhoneNumber : AppCompatActivity() {
             if (length < 8)
                 numbers += i.toString()
             printNum()
+            checkDone()
         }
         btns[10].setOnClickListener{
             val length = numbers.length
