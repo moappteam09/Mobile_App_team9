@@ -125,12 +125,6 @@
             android:layout_height="wrap_content"
             android:text="상품권"
             android:background="@drawable/border_round"/>
-
-
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>

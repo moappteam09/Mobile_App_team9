@@ -8,8 +8,8 @@ class orderSet {
     constructor()
 
     constructor(ham : Hamberger, jui : Drink, side : Side) {
-        this.ham = Hamberger()
-        this.drink = Drink()
-        this.side = Side()
+        this.ham = ham
+        this.drink = jui
+        this.side = side
     }
 }
