@@ -13,6 +13,8 @@ class EnterPhoneNumber : AppCompatActivity() {
         setContentView(R.layout.phone_number)
 
         val whereFrom = intent.getIntExtra("whereFrom", 0)
+        val orderSet = intent.getStringExtra("orderSet")
+        val totalPrice = intent.getIntExtra("totalPrice", 0)
 
         var numbers: String = ""
         val numView1: TextView = findViewById<TextView>(R.id.phone_number_numbers2)
@@ -36,8 +38,10 @@ class EnterPhoneNumber : AppCompatActivity() {
             if (length == 8) {
                 if (whereFrom == 0)
                     intent = Intent(this, CheckSelectedMenu::class.java)
-                else
+                else {
                     intent = Intent(this, PaymentActivity::class.java)
+                    intent.putExtra("orderSet", orderSet)
+                }
                 intent.putExtra("numbers", numbers)
                 startActivity(intent)
             }

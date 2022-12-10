@@ -19,7 +19,7 @@
             android:id="@+id/itemName"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:text="메뉴명" />
         <androidx.appcompat.widget.AppCompatButton

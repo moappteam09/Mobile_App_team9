@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp1.databinding.CheckListBinding
 import com.example.tp1.databinding.ItemLayoutBinding
-import com.example.tp1.databinding.SelectMenuBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -23,7 +22,7 @@ class CheckSelectedMenu : AppCompatActivity() {
     lateinit var database: DatabaseReference
     var numbers: String? = ""
 
-    var dataSet = mutableListOf(orderSet())
+    var dataSet = mutableListOf<orderSet>()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -39,12 +38,14 @@ class CheckSelectedMenu : AppCompatActivity() {
             }
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                Log.d("RecyclerView", "onBindViewHolder(): $position")
                 val binding	= (holder as MyViewHolder).binding
-                binding.itemName.text =	dataSet[position].ham.name + ", " + dataSet[position].drink.name + ", " +dataSet[position].side.name // 뷰에 데이터 출력
+                binding.itemName.text =	dataSet[position].getName()
+                binding.itemPrice.text = dataSet[position].getTotalPrice().toString()
                 binding.itemBtn.setOnClickListener { // 뷰에 이벤트 추가
                     val intent = Intent(this@CheckSelectedMenu, PaymentActivity::class.java)
                     intent.putExtra("numbers", numbers)
+                    intent.putExtra("orderSet", dataSet[position].getAll())
+                    intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     startActivity(intent)
                 }
             }
@@ -62,13 +63,60 @@ class CheckSelectedMenu : AppCompatActivity() {
                 for (i in data) {
                     var pNum = i.child("phone").getValue().toString()
                     var str = pNum.slice(IntRange(4, 7)) + pNum.slice(IntRange(9, 12))
-                    if (str.equals(numbers)) {
-                        for (j in i.child("setMenu").children) {
-                            Log.d("Debug", j.child("hamburger").getValue().toString())
-                            val ham = Hamberger("url", j.child("hamburger").getValue().toString(), "1000", "cow", "sweet", 1)
-                            val drink = Drink("url", j.child("drink").getValue().toString(), "1000")
-                            val side = Side("url", j.child("side").getValue().toString(), "1000")
-                            dataSet.add(orderSet(ham, drink, side))
+                    for (l in i.child("setMenu").children) {
+                        if (str.equals(numbers)) {
+                            var hamData = snapshot.child("hamburger")
+                            var drinkData = snapshot.child("drink")
+                            var sideData = snapshot.child("side")
+                            var hams = mutableListOf<Hamberger>()
+                            var drinks = mutableListOf<Drink>()
+                            var sides = mutableListOf<Side>()
+                            fun hamAdd(k: DataSnapshot) {
+                                hams.add(
+                                    Hamberger(
+                                        k.child("image").getValue().toString(),
+                                        k.child("name").getValue().toString(),
+                                        k.child("price").getValue().toString(),
+                                        k.child("patty").getValue().toString(),
+                                        k.child("taste").getValue().toString(),
+                                        k.child("stock").getValue().toString().toInt()
+                                    )
+                                )
+                            }
+
+                            fun drinkAdd(k: DataSnapshot) {
+                                drinks.add(
+                                    Drink(
+                                        k.child("image").getValue().toString(),
+                                        k.child("name").getValue().toString(),
+                                        k.child("price").getValue().toString()
+                                    )
+                                )
+                            }
+
+                            fun sideAdd(k: DataSnapshot) {
+                                sides.add(
+                                    Side(
+                                        k.child("image").getValue().toString(),
+                                        k.child("name").getValue().toString(),
+                                        k.child("price").getValue().toString()
+                                    )
+                                )
+                            }
+
+                            var splitString = l.child("hamburger").getValue().toString().split(",")
+                            if (l.child("hamburger").getValue().toString().isNotEmpty())
+                                for (j in splitString)
+                                    hamAdd(hamData.child(j))
+                            splitString = l.child("drink").getValue().toString().split(",")
+                            if (l.child("drink").getValue().toString().isNotEmpty())
+                                for (j in splitString)
+                                    drinkAdd(drinkData.child(j))
+                            splitString = l.child("side").getValue().toString().split(",")
+                            if (l.child("side").getValue().toString().isNotEmpty())
+                                for (j in splitString)
+                                    sideAdd(sideData.child(j))
+                            dataSet.add(orderSet(hams, drinks, sides))
                         }
                     }
                 }
@@ -79,8 +127,8 @@ class CheckSelectedMenu : AppCompatActivity() {
         }) // 리스너 등록
 
         numbers = intent.getStringExtra("numbers")
-        val orderbtn = findViewById<Button>(R.id.check_list_orderbtn)
-        orderbtn.setOnClickListener{
+        val orderBtn = binding.checkListOrderbtn
+        orderBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
