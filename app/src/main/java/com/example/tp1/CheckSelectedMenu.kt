@@ -24,6 +24,7 @@ class CheckSelectedMenu : AppCompatActivity() {
     var numbers: String? = ""
 
     var dataSet = mutableListOf<orderSet>()
+    var dataName = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -48,13 +49,15 @@ class CheckSelectedMenu : AppCompatActivity() {
                 binding.itemName.text =	dataSet[position].getFullName()
                 binding.itemPrice.text = dataSet[position].getTotalPrice().toString()
                 binding.delBtn.setOnClickListener { // 뷰에 이벤트 추가
-                    database.child("user").child(numbers.toString()).child("set" + (position + 1)).setValue(null)
+                    database.child("user").child(numbers.toString()).child(dataName[position]).setValue(null)
                     notifyDataSetChanged()
                 }
                 binding.root.setOnClickListener { // 뷰에 이벤트 추가
                     val intent = Intent(this@CheckSelectedMenu, PaymentActivity::class.java)
+                    intent.putExtra("whereFrom", 0)
                     intent.putExtra("numbers", numbers)
                     intent.putExtra("orderSet", dataSet[position].getAll())
+                    intent.putExtra("orderSet2", dataSet[position].getAllByDivision())
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     intent.putExtra("hamOrders", dataSet[position].getHamburger())
                     startActivity(intent)
@@ -70,6 +73,7 @@ class CheckSelectedMenu : AppCompatActivity() {
         database.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 dataSet.clear()
+                dataName.clear()
                 var data = snapshot.child("user").children
                 for (i in data) {
                     for (l in i.children) {
@@ -80,6 +84,7 @@ class CheckSelectedMenu : AppCompatActivity() {
                             var hams = mutableListOf<Hamburger>()
                             var drinks = mutableListOf<Drink>()
                             var sides = mutableListOf<Side>()
+                            dataName.add(l.key.toString())
                             fun hamAdd(k: DataSnapshot, orderCount : Int) {
                                 hams.add(
                                     Hamburger(
