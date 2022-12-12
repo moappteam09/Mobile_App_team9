@@ -3,13 +3,13 @@ package com.example.tp1
 import android.util.Log
 
 class orderSet {
-    var ham = mutableListOf<Hamberger>()
+    var ham = mutableListOf<Hamburger>()
     var drink = mutableListOf<Drink>()
     var side = mutableListOf<Side>()
 
     constructor()
 
-    constructor(ham : MutableList<Hamberger>, jui : MutableList<Drink>, side : MutableList<Side>) {
+    constructor(ham : MutableList<Hamburger>, jui : MutableList<Drink>, side : MutableList<Side>) {
         this.ham = ham
         this.drink = jui
         this.side = side
@@ -46,22 +46,22 @@ class orderSet {
     fun getTotalPrice(): Int {
         var total = 0
         for (i in ham)
-            total += i.price.toInt()
+            total += i.price.toInt() * i.orderCount
         for (i in drink)
-            total += i.price.toInt()
+            total += i.price.toInt() * i.orderCount
         for (i in side)
-            total += i.price.toInt()
+            total += i.price.toInt() * i.orderCount
         return total
     }
 
     fun getAll(): String {
         var string = ""
         for (i in ham)
-            string += i.name + "|" + i.price + ","
+            string += i.name + "!" + i.orderCount + "|" + i.price.toInt() * i.orderCount + ","
         for (i in drink)
-            string += i.name + "|" + i.price + ","
+            string += i.name + "!" + i.orderCount + "|" + i.price.toInt() * i.orderCount + ","
         for (i in side)
-            string += i.name + "|" + i.price + ","
+            string += i.name + "!" + i.orderCount + "|" + i.price.toInt() * i.orderCount + ","
         string = string.slice(IntRange(0, string.length - 2))
         return string
     }

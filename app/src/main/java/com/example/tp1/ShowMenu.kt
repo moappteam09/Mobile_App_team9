@@ -48,7 +48,7 @@ class ShowMenu  : AppCompatActivity() {
 
         ////////////////메뉴 보여주는 리사이클러뷰에 데이터 불러와서 넣는 과정 구현////////////////
 
-        var hamlist = ArrayList<Hamberger>() //햄버거 객체를 저장하는 list
+        var hamlist = ArrayList<Hamburger>() //햄버거 객체를 저장하는 list
         var all_hamburger = Firebase.database.reference// hamburger 객체를 레퍼런스함.
 //        Log.d("Hamburger", "PrintValue : ${all_hamburger}")
         all_hamburger.addValueEventListener(object : ValueEventListener {

@@ -61,17 +61,15 @@ class CheckSelectedMenu : AppCompatActivity() {
                 dataSet.clear()
                 var data = snapshot.child("user").children
                 for (i in data) {
-                    var pNum = i.child("phone").getValue().toString()
-                    var str = pNum.slice(IntRange(4, 7)) + pNum.slice(IntRange(9, 12))
-                    for (l in i.child("setMenu").children) {
-                        if (str.equals(numbers)) {
+                    for (l in i.children) {
+                        if (l.key.equals(numbers)) {
                             var hamData = snapshot.child("hamburger")
                             var drinkData = snapshot.child("drink")
                             var sideData = snapshot.child("side")
                             var hams = mutableListOf<Hamburger>()
                             var drinks = mutableListOf<Drink>()
                             var sides = mutableListOf<Side>()
-                            fun hamAdd(k: DataSnapshot) {
+                            fun hamAdd(k: DataSnapshot, orderCount : Int) {
                                 hams.add(
                                     Hamburger(
                                         k.child("image").getValue().toString(),
@@ -80,29 +78,29 @@ class CheckSelectedMenu : AppCompatActivity() {
                                         k.child("patty").getValue().toString(),
                                         k.child("taste").getValue().toString(),
                                         k.child("stock").getValue().toString().toInt(),
-                                        k.child("orderCount").getValue().toString().toInt()
+                                        orderCount
                                     )
                                 )
                             }
 
-                            fun drinkAdd(k: DataSnapshot) {
+                            fun drinkAdd(k: DataSnapshot, orderCount : Int) {
                                 drinks.add(
                                     Drink(
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
                                         k.child("price").getValue().toString(),
-                                        k.child("orderCount").getValue().toString().toInt()
+                                        orderCount
                                     )
                                 )
                             }
 
-                            fun sideAdd(k: DataSnapshot) {
+                            fun sideAdd(k: DataSnapshot, orderCount : Int) {
                                 sides.add(
                                     Side(
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
                                         k.child("price").getValue().toString(),
-                                        k.child("orderCount").getValue().toString().toInt()
+                                        orderCount
                                     )
                                 )
                             }
@@ -110,15 +108,15 @@ class CheckSelectedMenu : AppCompatActivity() {
                             var splitString = l.child("hamburger").getValue().toString().split(",")
                             if (l.child("hamburger").getValue().toString().isNotEmpty())
                                 for (j in splitString)
-                                    hamAdd(hamData.child(j))
+                                    hamAdd(hamData.child(j.split("!")[0]), j.split("!")[1].toInt())
                             splitString = l.child("drink").getValue().toString().split(",")
                             if (l.child("drink").getValue().toString().isNotEmpty())
                                 for (j in splitString)
-                                    drinkAdd(drinkData.child(j))
+                                    drinkAdd(drinkData.child(j.split("!")[0]), j.split("!")[1].toInt())
                             splitString = l.child("side").getValue().toString().split(",")
                             if (l.child("side").getValue().toString().isNotEmpty())
                                 for (j in splitString)
-                                    sideAdd(sideData.child(j))
+                                    sideAdd(sideData.child(j.split("!")[0]), j.split("!")[1].toInt())
                             dataSet.add(orderSet(hams, drinks, sides))
                         }
                     }
@@ -132,8 +130,10 @@ class CheckSelectedMenu : AppCompatActivity() {
         numbers = intent.getStringExtra("numbers")
         val orderBtn = binding.checkListOrderbtn
         orderBtn.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            // val intent = Intent(this, MainActivity::class.java)
+            // startActivity(intent)
+            database = Firebase.database.reference
+            database.child("test02").setValue("success!")
         }
     }
 }

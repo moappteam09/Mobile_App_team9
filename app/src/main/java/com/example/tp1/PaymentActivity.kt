@@ -28,7 +28,8 @@ class PaymentActivity : AppCompatActivity() {
         binding.totalOrder.setMovementMethod(ScrollingMovementMethod())
         if (orderSet != null) {
             for (i in orderSet.split(","))
-                binding.totalOrder.setText(binding.totalOrder.text.toString() + i.split("|")[0] + " : " + i.split("|")[1] + "원" + "\n")
+                binding.totalOrder.setText(binding.totalOrder.text.toString() + i.split("|")[0].split("!")[0]
+                        + " x" + i.split("|")[0].split("!")[1] + " : " + i.split("|")[1] + "원" + "\n")
         }
         binding.totalPrice.setText("합계 : " + totalPrice.toString() + "원")
         if (!numbers.isNullOrEmpty()) {
