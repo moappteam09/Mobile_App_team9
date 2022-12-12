@@ -8,7 +8,7 @@ import com.example.tp1.databinding.MenuViewholderBinding
 
 class ShowMenu_ViewHolder (val binding : MenuViewholderBinding) : RecyclerView.ViewHolder(binding.root)
 
-class ShowMenuList_Adapter(val dataSet: MutableList<Hamberger>) :
+class ShowMenuList_Adapter(val dataSet: MutableList<Hamburger>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ShowMenu_ViewHolder(MenuViewholderBinding.inflate(LayoutInflater.from(parent.context),

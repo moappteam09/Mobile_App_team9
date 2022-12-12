@@ -79,7 +79,7 @@ class CheckSelectedMenu : AppCompatActivity() {
                                         k.child("price").getValue().toString(),
                                         k.child("patty").getValue().toString(),
                                         k.child("taste").getValue().toString(),
-                                        k.child("stock").getValue().toString().toInt(),
+                                        k.child("stock").getValue().toString(),
                                         k.child("orderCount").getValue().toString().toInt()
                                     )
                                 )
