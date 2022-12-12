@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.tp1.databinding.CheckListBinding
 import com.example.tp1.databinding.ItemLayoutBinding
 import com.google.firebase.database.DataSnapshot
@@ -39,13 +40,23 @@ class CheckSelectedMenu : AppCompatActivity() {
 
             override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 val binding	= (holder as MyViewHolder).binding
-                binding.itemName.text =	dataSet[position].getName()
+
+                Glide.with(holder.itemView)
+                    .load(dataSet[position].getRepresentedImage()) // 불러올 이미지 url
+                    .into(binding.itemImg) // 이미지를 넣을 뷰
+
+                binding.itemName.text =	dataSet[position].getFullName()
                 binding.itemPrice.text = dataSet[position].getTotalPrice().toString()
-                binding.itemBtn.setOnClickListener { // 뷰에 이벤트 추가
+                binding.delBtn.setOnClickListener { // 뷰에 이벤트 추가
+                    database.child("user").child(numbers.toString()).child("set" + (position + 1)).setValue(null)
+                    notifyDataSetChanged()
+                }
+                binding.root.setOnClickListener { // 뷰에 이벤트 추가
                     val intent = Intent(this@CheckSelectedMenu, PaymentActivity::class.java)
                     intent.putExtra("numbers", numbers)
                     intent.putExtra("orderSet", dataSet[position].getAll())
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
+                    intent.putExtra("hamOrders", dataSet[position].getHamburger())
                     startActivity(intent)
                 }
             }
@@ -62,7 +73,7 @@ class CheckSelectedMenu : AppCompatActivity() {
                 var data = snapshot.child("user").children
                 for (i in data) {
                     for (l in i.children) {
-                        if (l.key.equals(numbers)) {
+                        if (i.key.equals(numbers)) {
                             var hamData = snapshot.child("hamburger")
                             var drinkData = snapshot.child("drink")
                             var sideData = snapshot.child("side")
@@ -130,10 +141,8 @@ class CheckSelectedMenu : AppCompatActivity() {
         numbers = intent.getStringExtra("numbers")
         val orderBtn = binding.checkListOrderbtn
         orderBtn.setOnClickListener{
-            // val intent = Intent(this, MainActivity::class.java)
-            // startActivity(intent)
-            database = Firebase.database.reference
-            database.child("test02").setValue("success!")
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }

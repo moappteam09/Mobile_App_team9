@@ -117,6 +117,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center">
         <android.widget.Button
+            android:id="@+id/cardPay"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="신용/체크카드"
@@ -125,6 +126,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/border_round_black"/>
         <android.widget.Button
+            android:id="@+id/giftPay"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="상품권"
