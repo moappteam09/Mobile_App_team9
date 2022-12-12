@@ -15,6 +15,7 @@ class EnterPhoneNumber : AppCompatActivity() {
         val whereFrom = intent.getIntExtra("whereFrom", 0)
         val orderSet = intent.getStringExtra("orderSet")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
+        val hamOrders = intent.getStringExtra("hamOrders")
 
         var numbers: String = ""
         val numView1: TextView = findViewById<TextView>(R.id.phone_number_numbers2)
@@ -41,6 +42,8 @@ class EnterPhoneNumber : AppCompatActivity() {
                 else {
                     intent = Intent(this, PaymentActivity::class.java)
                     intent.putExtra("orderSet", orderSet)
+                    intent.putExtra("totalPrice", totalPrice)
+                    intent.putExtra("hamOrders", hamOrders)
                 }
                 intent.putExtra("numbers", numbers)
                 startActivity(intent)
@@ -57,13 +60,13 @@ class EnterPhoneNumber : AppCompatActivity() {
             }
         }
         for (i in 0..9)
-        btns[i].setOnClickListener{
-            val length = numbers.length
-            if (length < 8)
-                numbers += i.toString()
-            printNum()
-            checkDone()
-        }
+            btns[i].setOnClickListener{
+                val length = numbers.length
+                if (length < 8)
+                    numbers += i.toString()
+                printNum()
+                checkDone()
+            }
         btns[10].setOnClickListener{
             val length = numbers.length
             if (length > 0)
