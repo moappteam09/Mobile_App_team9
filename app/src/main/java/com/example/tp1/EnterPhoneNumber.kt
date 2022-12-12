@@ -16,6 +16,11 @@ class EnterPhoneNumber : AppCompatActivity() {
         val orderSet = intent.getStringExtra("orderSet")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
         val hamOrders = intent.getStringExtra("hamOrders")
+        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
+//        for(i : AllMenuStock in origStock){
+//            Log.d("origstock", "${i.name}")
+//        }
+
 
         var numbers: String = ""
         val numView1: TextView = findViewById<TextView>(R.id.phone_number_numbers2)
@@ -46,6 +51,7 @@ class EnterPhoneNumber : AppCompatActivity() {
                     intent.putExtra("hamOrders", hamOrders)
                 }
                 intent.putExtra("numbers", numbers)
+                intent.putExtra("origStock", origStock as java.io.Serializable)
                 startActivity(intent)
             }
         }
@@ -78,6 +84,7 @@ class EnterPhoneNumber : AppCompatActivity() {
                 numbers = numbers.slice(IntRange(0, numbers.length - 2))
             if (stack > 4) {
                 val intent = Intent(this, AdminList::class.java)
+                intent.putExtra("origStock", origStock as java.io.Serializable)
                 startActivity(intent)
             }
             printNum()

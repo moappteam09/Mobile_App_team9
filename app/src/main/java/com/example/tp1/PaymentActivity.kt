@@ -29,6 +29,7 @@ class PaymentActivity : AppCompatActivity() {
         var orderSet = intent.getStringExtra("orderSet")
         var hamOrders = intent.getStringExtra("hamOrders")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
+        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 
         binding.totalOrder.setMovementMethod(ScrollingMovementMethod())
         if (orderSet != null) {
@@ -46,10 +47,13 @@ class PaymentActivity : AppCompatActivity() {
         putPhoneNumber.setOnClickListener{
             val intent = Intent(this, EnterPhoneNumber::class.java)
             intent.putExtra("whereFrom", 1)
+            intent.putExtra("origStock", origStock as java.io.Serializable)
             startActivity(intent)
         }
 
         val mainIntent = Intent(this, MainActivity::class.java)
+        mainIntent.putExtra("start", 1)
+        mainIntent.putExtra("origStock", origStock as java.io.Serializable)
         var	alertDialog = AlertDialog.Builder(this)
         val eventHandler = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {

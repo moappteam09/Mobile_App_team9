@@ -31,6 +31,7 @@ class CheckSelectedMenu : AppCompatActivity() {
         setContentView(binding.root)
         database = Firebase.database.reference
         dataSet.clear()
+        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 
         class MyViewHolder(val binding: ItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
         class MyAdapter(val dataSet: MutableList<orderSet>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -57,6 +58,7 @@ class CheckSelectedMenu : AppCompatActivity() {
                     intent.putExtra("orderSet", dataSet[position].getAll())
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     intent.putExtra("hamOrders", dataSet[position].getHamburger())
+                    intent.putExtra("origStock", origStock as java.io.Serializable)
                     startActivity(intent)
                 }
             }
@@ -142,6 +144,7 @@ class CheckSelectedMenu : AppCompatActivity() {
         val orderBtn = binding.checkListOrderbtn
         orderBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("origStock", origStock as java.io.Serializable)
             startActivity(intent)
         }
     }
