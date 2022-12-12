@@ -42,7 +42,7 @@ class AdminList  : AppCompatActivity() {
                             //val hambur = snapshot.getValue<Hamburger>()
                             val ham = snapshot.child("hamburger")
                             val hambur = snapshot.getValue<Hamburger>()
-                            Log.d("Database", "show me ${hambur.taste}")
+                            //Log.d("Database", "show me ${hambur.taste}")
                             //Log.d("Database","Value : ${ham.childrenCount}")
                             //hamlist.add(ham)
                             for(item in ham.children) {
@@ -52,7 +52,7 @@ class AdminList  : AppCompatActivity() {
                                 hamlist[index].price = item.child("price").value as String
                                 hamlist[index].patty = item.child("patty").value as String
                                 hamlist[index].taste = item.child("taste").value as String
-                                hamlist[index].left = item.child("stock").value as String
+                                //hamlist[index].left = item.child("stock").value as String
                                 Log.d("Database", "Values : ${item.key.toString()}")
                                 //var image : String = item.child("image").value as String
 //                                Log.d("Database", "Values : $image")

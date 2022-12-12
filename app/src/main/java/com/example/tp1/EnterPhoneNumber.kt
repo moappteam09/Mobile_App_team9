@@ -67,10 +67,19 @@ class EnterPhoneNumber : AppCompatActivity() {
                 printNum()
                 checkDone()
             }
+        var stack = 0
         btns[10].setOnClickListener{
             val length = numbers.length
+            if (length == 0)
+                stack++
+            else
+                stack = 0
             if (length > 0)
                 numbers = numbers.slice(IntRange(0, numbers.length - 2))
+            if (stack > 4) {
+                val intent = Intent(this, AdminList::class.java)
+                startActivity(intent)
+            }
             printNum()
         }
     }

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
         normalKiosk.setOnClickListener{
-            val intent = Intent(this, AdminList::class.java)
+            val intent = Intent(this, ShowMenu::class.java)
             startActivity(intent)
         }
     }
