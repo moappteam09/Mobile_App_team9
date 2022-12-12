@@ -6,9 +6,11 @@ import android.renderscript.Sampler.Value
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.GridLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tp1.databinding.SelectMenuBinding
 import com.google.firebase.database.DataSnapshot
@@ -48,7 +50,7 @@ class ShowMenu  : AppCompatActivity() {
 
         ////////////////메뉴 보여주는 리사이클러뷰에 데이터 불러와서 넣는 과정 구현////////////////
 
-        var hamlist = ArrayList<Hamberger>() //햄버거 객체를 저장하는 list
+        var hamlist = ArrayList<Hamburger>() //햄버거 객체를 저장하는 list
         var all_hamburger = Firebase.database.reference// hamburger 객체를 레퍼런스함.
 //        Log.d("Hamburger", "PrintValue : ${all_hamburger}")
         all_hamburger.addValueEventListener(object : ValueEventListener {
@@ -73,11 +75,43 @@ class ShowMenu  : AppCompatActivity() {
                                 Log.d("Database", "Values : $taste")
                                 var left  : String = item.child("stock").value as String
                                 Log.d("Database", "Values : $left")
-
+                                //받은 데이터를 Hamburger클래스에 담기
+                                hamlist.add(Hamburger(image, name, price, patty, taste, left.toInt(), 0))
                             }
                         }
                     }
-//                    cnt++
+                }
+                Log.d("burgerMenuList", "${hamlist.toString()}")
+                //리사이클러뷰 어댑터에 받은 데이터 넘겨주는 부분
+                binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
+                binding.menuRecycler.adapter = ShowMenuList_Adapter(hamlist)
+
+//                binding.menuRecycler.addItemDecoration(
+//                    DividerItemDecoration(this@ShowMenu,
+//                        LinearLayoutManager.VERTICAL))
+                (binding.menuRecycler.adapter as ShowMenuList_Adapter).notifyDataSetChanged()
+
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                print(error.message)
+            }
+
+        })
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        val order = findViewById <Button>(R.id.btn_buy)  //주문하기 버튼
+        order.setOnClickListener{
+            val intent = Intent(this, PaymentActivity::class.java)
+            startActivity(intent)
+        }
+    }
+}
+
+//cnt++
 //                    var key = "burger" + "${cnt.toString()}"
 //                    Log.d("Burger", "Hamburger`s children : ${ds}")
 //                    Log.d("Burger", "Hamburger`s children : ${ds.child("burger1").getValue()}")
@@ -94,28 +128,3 @@ class ShowMenu  : AppCompatActivity() {
 //                        hamlist.add(hamClass)
 //                        Log.d("HamClass", "HamList : ${hamlist}")
 //                    }
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                print(error.message)
-            }
-
-        })
-//
-//        binding.menuRecycler.layoutManager = LinearLayoutManager(this)
-//        binding.menuRecycler.adapter = ShowMenuList_Adapter(hamlist)
-//
-//        binding.menuRecycler.addItemDecoration(
-//            DividerItemDecoration(this,
-//            LinearLayoutManager.VERTICAL))
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
-        val order = findViewById <Button>(R.id.btn_buy)  //주문하기 버튼
-        order.setOnClickListener{
-            val intent = Intent(this, PaymentActivity::class.java)
-            startActivity(intent)
-        }
-    }
-}
-

@@ -3,13 +3,13 @@ package com.example.tp1
 import android.util.Log
 
 class orderSet {
-    var ham = mutableListOf<Hamberger>()
+    var ham = mutableListOf<Hamburger>()
     var drink = mutableListOf<Drink>()
     var side = mutableListOf<Side>()
 
     constructor()
 
-    constructor(ham : MutableList<Hamberger>, jui : MutableList<Drink>, side : MutableList<Side>) {
+    constructor(ham : MutableList<Hamburger>, jui : MutableList<Drink>, side : MutableList<Side>) {
         this.ham = ham
         this.drink = jui
         this.side = side
