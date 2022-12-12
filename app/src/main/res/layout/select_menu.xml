@@ -77,6 +77,15 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:background="@drawable/layout_border">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/menu_recycler"
+            xmlns:android = "http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
+
+
+
     </LinearLayout>
 
     <TextView
