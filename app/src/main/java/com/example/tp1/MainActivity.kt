@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("whereFrom", 0) // 전화번호 레이아웃 재사용 위함 | 0: 기존 고객, 1: 새로운 고객
             startActivity(intent)
         }
+
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
         normalKiosk.setOnClickListener{
             val intent = Intent(this, ShowMenu::class.java)
