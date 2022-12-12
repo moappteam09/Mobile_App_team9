@@ -13,16 +13,20 @@
         android:layout_marginTop="45dp"
         android:layout_marginLeft="15dp"/>
     
-    <LinearLayout
+    <TextView
+        android:id="@+id/totalOrder"
         android:layout_width="match_parent"
         android:layout_height="104dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        android:scrollbars="vertical"
         android:background="@drawable/layout_border">
 
     <!--리사이클러뷰로 선택한 메뉴 보여주기-->
-    </LinearLayout>
+    </TextView>
     <TextView
+        android:id="@+id/totalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="합계 : "
@@ -125,12 +129,6 @@
             android:layout_height="wrap_content"
             android:text="상품권"
             android:background="@drawable/border_round"/>
-
-
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>

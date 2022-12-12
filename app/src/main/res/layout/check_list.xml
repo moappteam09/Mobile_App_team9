@@ -33,6 +33,6 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/border_round_orange"
         android:paddingVertical="20dp"
-        android:text="주문하기" />
+        android:text="취소" />
 
 </LinearLayout>
