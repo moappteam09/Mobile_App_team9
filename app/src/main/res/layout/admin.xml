@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_margin="50dp"
+        android:layout_gravity="center"
+        android:text="재고 관리 모드" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/admin_recyclerView"
+        android:padding="10dp"
+        android:background="@drawable/border_round"
+        android:layout_marginHorizontal="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="40dp"
+        android:layout_marginHorizontal="40dp"
+        android:gravity="center"
+        android:background="@drawable/border_round"
+        >
+
+        <TextView
+            android:id="@+id/admin_textview_burger_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:paddingVertical="20dp"
+            android:text="햄버거 : |" />
+
+        <TextView
+            android:id="@+id/admin_textview_drink_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:paddingVertical="20dp"
+            android:text="음료수 : |" />
+
+        <TextView
+            android:id="@+id/admin_textview_side_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:paddingVertical="20dp"
+            android:text="사이드 : |" />
+
+        <TextView
+            android:id="@+id/admin_textview_total_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:paddingVertical="20dp"
+            android:text="전체 매출 : " />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/admin_return"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/border_round_orange"
+            android:paddingVertical="20dp"
+            android:text="취소" />
+
+        <Space
+            android:layout_width="100dp"
+            android:layout_height="0dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/admin_confirm"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/border_round_orange"
+            android:paddingVertical="20dp"
+            android:text="확인" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

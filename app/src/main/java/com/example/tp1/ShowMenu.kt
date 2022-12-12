@@ -6,11 +6,9 @@ import android.renderscript.Sampler.Value
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.GridLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tp1.databinding.SelectMenuBinding
 import com.google.firebase.database.DataSnapshot
@@ -49,190 +47,67 @@ class ShowMenu  : AppCompatActivity() {
         binding.spinPatty.setSelection(patty!!.toInt())
 
         ////////////////메뉴 보여주는 리사이클러뷰에 데이터 불러와서 넣는 과정 구현////////////////
-        val hamlist = ArrayList<Hamburger>() //햄버거 객체를 저장하는 list
-        val drinklist = ArrayList<Drink>() //음료 객체를 저장하는 list
-        val sidelist = ArrayList<Side>() //사이드메뉴 객체를 저장하는 list
-        val alllist = ArrayList<AllMenu>() //모든 메뉴의 이미지, 이름, 가격이 들어가있는 클래스의 list
 
-        var all_hamburger = Firebase.database.reference// 파이어베이스 DB객체를 레퍼런스함.
-
-        //일단 DB에 있는 모든 메뉴들을 불러와서 저장해놓기 (전체 메뉴를 보여주기 위함)
+        var hamlist = ArrayList<Hamburger>() //햄버거 객체를 저장하는 list
+        var all_hamburger = Firebase.database.reference// hamburger 객체를 레퍼런스함.
+//        Log.d("Hamburger", "PrintValue : ${all_hamburger}")
         all_hamburger.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+//                print(snapshot.children.count())
                 for(ds in snapshot.children) {
                     when {
                         "hamburger".equals(ds.key) -> {
-                            val hamall = snapshot.child("hamburger")
-                            Log.d("Database","Value : ${hamall.childrenCount}")
-                            for(item in hamall.children) {
+                            val ham = snapshot.child("hamburger")
+                            Log.d("Database","Value : ${ham.childrenCount}")
+                            for(item in ham.children) {
+                                Log.d("Database", "Values : ${item.key.toString()}")
                                 var image : String = item.child("image").value as String
+                                Log.d("Database", "Values : $image")
                                 var name : String = item.child("name").value as String
+                                Log.d("Database", "Values : $name")
                                 var price : String = item.child("price").value as String
-                                //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price))
+                                Log.d("Database", "Values : $price")
+                                var patty : String = item.child("patty").value as String
+                                Log.d("Database", "Values : $patty")
+                                var taste : String = item.child("taste").value as String
+                                Log.d("Database", "Values : $taste")
+                                var left  : String = item.child("stock").value as String
+                                Log.d("Database", "Values : $left")
+
                             }
                         }
                     }
+//                    cnt++
+//                    var key = "burger" + "${cnt.toString()}"
+//                    Log.d("Burger", "Hamburger`s children : ${ds}")
+//                    Log.d("Burger", "Hamburger`s children : ${ds.child("burger1").getValue()}")
+//                    val ham = snapshot.child("$key") //burger1, burger2, .. 등의 객체를 가져옴
+//                    for(item in ham.children) {
+//                        var image : String = item.child("image").value as String
+//                        var name : String = item.child("name").value as String
+//                        var price : String = item.child("price").value as String
+//                        var patty : String = item.child("patty").value as String
+//                        var taste : String = item.child("taste").value as String
+//                        var left  : Int = item.child("stock").value as Int
+//
+//                        val hamClass = Hamberger(image, name, price, patty, taste, left)
+//                        hamlist.add(hamClass)
+//                        Log.d("HamClass", "HamList : ${hamlist}")
+//                    }
                 }
-                for(ds in snapshot.children) {
-                    when {
-                        "drink".equals(ds.key) -> {
-                            val driall = snapshot.child("drink")
-                            Log.d("Database","Value : ${driall.childrenCount}")
-                            for(item in driall.children) {
-                                var image : String = item.child("image").value as String
-                                var name : String = item.child("name").value as String
-                                var price : String = item.child("price").value as String
-                                //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price))
-                            }
-                        }
-                    }
-                }
-                for(ds in snapshot.children) {
-                    when {
-                        "side".equals(ds.key) -> {
-                            val sideall = snapshot.child("side")
-                            Log.d("Database","Value : ${sideall.childrenCount}")
-                            for(item in sideall.children) {
-                                var image : String = item.child("image").value as String
-                                var name : String = item.child("name").value as String
-                                var price : String = item.child("price").value as String
-                                //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price))
-                            }
-                        }
-                    }
-                }
-                binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-                binding.menuRecycler.adapter = ShowAll_Adapter(alllist)
             }
             override fun onCancelled(error: DatabaseError) {
                 print(error.message)
             }
 
         })
-        //전체 버튼을 눌렀을 경우, 햄버거와 사이드 음료 모든 메뉴를 리사이클러뷰로 보여줌
-        binding.watchAll.setOnClickListener() {
-            binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-            binding.menuRecycler.adapter = ShowAll_Adapter(alllist)
-
-        }
-
-
-        //햄버거 버튼을 눌렀을 경우 햄버거 메뉴를 보여줌
-
-        binding.watchHam.setOnClickListener() {
-            all_hamburger.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for(ds in snapshot.children) {
-                        when {
-                            "hamburger".equals(ds.key) -> {
-                                val ham = snapshot.child("hamburger")
-                                for(item in ham.children) {
-                                    var image : String = item.child("image").value as String
-                                    var name : String = item.child("name").value as String
-                                    var price : String = item.child("price").value as String
-                                    var patty : String = item.child("patty").value as String
-                                    var taste : String = item.child("taste").value as String
-                                    var left  : String = item.child("stock").value as String
-                                    //받은 데이터를 Hamburger클래스에 담기
-                                    if(hamlist.size != ham.childrenCount.toInt()) {
-                                        hamlist.add(Hamburger(image, name, price, patty, taste, left.toInt(), 0))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //리사이클러뷰 어댑터에 받은 데이터 넘겨주는 부분
-                    binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-                    binding.menuRecycler.adapter = ShowMenuList_Adapter(hamlist)
-//                (binding.menuRecycler.adapter as ShowMenuList_Adapter).notifyDataSetChanged()
-
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    print(error.message)
-                }
-
-            })
-        }
-
-        //음료 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
-        binding.watchBev.setOnClickListener() {
-            all_hamburger.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-//                print(snapshot.children.count())
-                    for(ds in snapshot.children) {
-                        when {
-                            "drink".equals(ds.key) -> {
-                                val dri = snapshot.child("drink")
-                                for(item in dri.children) {
-                                    var image : String = item.child("image").value as String
-                                    var name : String = item.child("name").value as String
-                                    var price : String = item.child("price").value as String
-                                    var left  : String = item.child("stock").value as String
-                                    //받은 데이터를 Hamburger클래스에 담기
-                                    if(drinklist.size!=dri.childrenCount.toInt()) {
-                                        drinklist.add(Drink(image, name, price, 0))
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                    binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-                    binding.menuRecycler.adapter = ShowDrink_Adapter(drinklist) //음료데이터 처리해주는 어댑터 따로 만들어주기
-//                    (binding.menuRecycler.adapter as ShowDrink_Adapter).notifyDataSetChanged()
-
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    print(error.message)
-                }
-
-            })
-
-        }
-
-        //사이드 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
-        binding.watchSide.setOnClickListener() {
-            all_hamburger.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-//                print(snapshot.children.count())
-                    for(ds in snapshot.children) {
-                        when {
-                            "side".equals(ds.key) -> {
-                                val side = snapshot.child("side")
-                                for(item in side.children) {
-                                    var image : String = item.child("image").value as String
-                                    var name : String = item.child("name").value as String
-                                    var price : String = item.child("price").value as String
-                                    var left  : String = item.child("stock").value as String
-                                    //받은 데이터를 Hamburger클래스에 담기
-                                    if(sidelist.size != side.childrenCount.toInt()) {
-                                        sidelist.add(Side(image, name, price, 0))
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                    binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-                    binding.menuRecycler.adapter = ShowSide_Adapter(sidelist) //음료데이터 처리해주는 어댑터 따로 만들어주기
-//                    (binding.menuRecycler.adapter as ShowSide_Adapter).notifyDataSetChanged()
-
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    print(error.message)
-                }
-
-            })
-
-        }
-
-
+//
+//        binding.menuRecycler.layoutManager = LinearLayoutManager(this)
+//        binding.menuRecycler.adapter = ShowMenuList_Adapter(hamlist)
+//
+//        binding.menuRecycler.addItemDecoration(
+//            DividerItemDecoration(this,
+//            LinearLayoutManager.VERTICAL))
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -243,3 +118,4 @@ class ShowMenu  : AppCompatActivity() {
         }
     }
 }
+
