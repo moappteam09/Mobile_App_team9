@@ -52,6 +52,10 @@ class PaymentActivity : AppCompatActivity() {
         putPhoneNumber.setOnClickListener{
             val intent = Intent(this, EnterPhoneNumber::class.java)
             intent.putExtra("whereFrom", whereFrom)
+            intent.putExtra("orderSet", orderSet)
+            intent.putExtra("orderSet2", orderSet2)
+            intent.putExtra("hamOrders", hamOrders)
+            intent.putExtra("totalPrice", totalPrice)
             startActivity(intent)
         }
 
@@ -79,7 +83,7 @@ class PaymentActivity : AppCompatActivity() {
         }) // 리스너 등록
 
         fun payMethod() {
-            if (whereFrom == 0) {
+            if (whereFrom == 1 && numbers.toString().length == 8) {
                 var min = 1
                 for (i in 0 until dataName.size) {
                     val tmp = dataName[i].slice(IntRange(3, 3)).toInt()

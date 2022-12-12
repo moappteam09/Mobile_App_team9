@@ -61,6 +61,8 @@ class CheckSelectedMenu : AppCompatActivity() {
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     intent.putExtra("hamOrders", dataSet[position].getHamburger())
                     startActivity(intent)
+                    database.onDisconnect()
+                    finish()
                 }
             }
             override fun getItemCount(): Int {
@@ -121,19 +123,32 @@ class CheckSelectedMenu : AppCompatActivity() {
                                 )
                             }
 
-                            var splitString = l.child("hamburger").getValue().toString().split(",")
-                            if (l.child("hamburger").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    hamAdd(hamData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            splitString = l.child("drink").getValue().toString().split(",")
-                            if (l.child("drink").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    drinkAdd(drinkData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            splitString = l.child("side").getValue().toString().split(",")
-                            if (l.child("side").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    sideAdd(sideData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            dataSet.add(orderSet(hams, drinks, sides))
+                            if (l.child("hamburger").getValue() != null
+                                && l.child("drink").getValue() != null
+                                && l.child("side").getValue() != null) {
+                                var splitString = l.child("hamburger").getValue().toString().split(",")
+                                if (l.child("hamburger").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        hamAdd(
+                                            hamData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                splitString = l.child("drink").getValue().toString().split(",")
+                                if (l.child("drink").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        drinkAdd(
+                                            drinkData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                splitString = l.child("side").getValue().toString().split(",")
+                                if (l.child("side").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        sideAdd(
+                                            sideData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                dataSet.add(orderSet(hams, drinks, sides))
+                            }
                         }
                     }
                 }
