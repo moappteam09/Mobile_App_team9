@@ -68,18 +68,19 @@ class CheckSelectedMenu : AppCompatActivity() {
                             var hamData = snapshot.child("hamburger")
                             var drinkData = snapshot.child("drink")
                             var sideData = snapshot.child("side")
-                            var hams = mutableListOf<Hamberger>()
+                            var hams = mutableListOf<Hamburger>()
                             var drinks = mutableListOf<Drink>()
                             var sides = mutableListOf<Side>()
                             fun hamAdd(k: DataSnapshot) {
                                 hams.add(
-                                    Hamberger(
+                                    Hamburger(
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
                                         k.child("price").getValue().toString(),
                                         k.child("patty").getValue().toString(),
                                         k.child("taste").getValue().toString(),
-                                        k.child("stock").getValue().toString().toInt()
+                                        k.child("stock").getValue().toString().toInt(),
+                                        k.child("orderCount").getValue().toString().toInt()
                                     )
                                 )
                             }
@@ -89,7 +90,8 @@ class CheckSelectedMenu : AppCompatActivity() {
                                     Drink(
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
-                                        k.child("price").getValue().toString()
+                                        k.child("price").getValue().toString(),
+                                        k.child("orderCount").getValue().toString().toInt()
                                     )
                                 )
                             }
@@ -99,7 +101,8 @@ class CheckSelectedMenu : AppCompatActivity() {
                                     Side(
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
-                                        k.child("price").getValue().toString()
+                                        k.child("price").getValue().toString(),
+                                        k.child("orderCount").getValue().toString().toInt()
                                     )
                                 )
                             }
