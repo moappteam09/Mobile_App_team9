@@ -83,9 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"/>
-
-
-
     </LinearLayout>
 
     <TextView
@@ -101,7 +98,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
@@ -120,7 +117,7 @@
 
         <android.widget.Button
             android:id="@+id/btn_buy"
-            android:layout_width="match_parent"
+            android:layout_width="66dp"
             android:layout_height="match_parent"
             android:text="주문하기"
             android:textSize="15dp"

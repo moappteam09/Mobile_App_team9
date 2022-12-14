@@ -8,7 +8,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+
 class MainActivity : AppCompatActivity() {
+    companion object {
+        var orderlist = mutableListOf<orderSet>()//orderSet전역변수로 선언
+    }
     lateinit var database : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

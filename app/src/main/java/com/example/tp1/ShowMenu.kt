@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.renderscript.Sampler.Value
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.GridLayout
@@ -13,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.tp1.MainActivity.Companion.orderlist
+import com.example.tp1.databinding.ItemLayoutPlusBinding
 import com.example.tp1.databinding.SelectMenuBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -78,7 +84,7 @@ class ShowMenu  : AppCompatActivity() {
                                 var left : String = item.child("stock").value as String
 
                                 //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price, patty, taste, left.toInt(), 0, 0))
+                                alllist.add(AllMenu(image, name, price, patty, taste, left.toInt(), 1, 0))
                             }
                         }
                     }
@@ -93,7 +99,7 @@ class ShowMenu  : AppCompatActivity() {
                                 var name : String = item.child("name").value as String
                                 var price : String = item.child("price").value as String
                                 //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price, "", "",0, 0, 2 ))
+                                alllist.add(AllMenu(image, name, price, "", "",0, 1, 2 ))
                             }
                         }
                     }
@@ -108,7 +114,7 @@ class ShowMenu  : AppCompatActivity() {
                                 var name : String = item.child("name").value as String
                                 var price : String = item.child("price").value as String
                                 //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price, "", "", 0, 0, 1))
+                                alllist.add(AllMenu(image, name, price, "", "", 0, 1, 1))
                             }
                         }
                     }
@@ -143,7 +149,7 @@ class ShowMenu  : AppCompatActivity() {
                     }
                 }
                 binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-                binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1)
+                binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1, binding)
             }
             override fun onCancelled(error: DatabaseError) {
                 print(error.message)
@@ -166,7 +172,7 @@ class ShowMenu  : AppCompatActivity() {
                 }
             }
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-            binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1)
+            binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1, binding)
         }
 
         //햄버거 버튼을 눌렀을 경우 햄버거 메뉴를 보여줌
@@ -180,7 +186,7 @@ class ShowMenu  : AppCompatActivity() {
                 }
             }
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-            binding.menuRecycler.adapter = ShowAll_Adapter(afterall, 0)
+            binding.menuRecycler.adapter = ShowAll_Adapter(afterall, 0, binding)
         }
 
         //음료 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
@@ -188,7 +194,7 @@ class ShowMenu  : AppCompatActivity() {
             binding.spinPatty.visibility = View.INVISIBLE
             binding.spinTaste.visibility = View.INVISIBLE
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-            binding.menuRecycler.adapter = ShowAll_Adapter(drinkall, 2)
+            binding.menuRecycler.adapter = ShowAll_Adapter(drinkall, 2, binding)
         }
 
         //사이드 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
@@ -196,11 +202,9 @@ class ShowMenu  : AppCompatActivity() {
             binding.spinPatty.visibility = View.INVISIBLE
             binding.spinTaste.visibility = View.INVISIBLE
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
-            binding.menuRecycler.adapter = ShowAll_Adapter(sideall, 1)
+            binding.menuRecycler.adapter = ShowAll_Adapter(sideall, 1, binding)
 
         }
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -209,5 +213,91 @@ class ShowMenu  : AppCompatActivity() {
             val intent = Intent(this, PaymentActivity::class.java)
             startActivity(intent)
         }
+        binding.selectmenuRecycler.layoutManager = LinearLayoutManager(this)
     }
+}
+class orderMenuHolder (val binding : ItemLayoutPlusBinding) : RecyclerView.ViewHolder(binding.root)
+
+class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return orderMenuHolder(ItemLayoutPlusBinding.inflate(LayoutInflater.from(parent.context),
+        parent, false))
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d("OrderSet", "name : ${dataSet[position]}")
+        Log.d("dataSize", "size : ${dataSet.size}")
+        val viewholder = (holder as orderMenuHolder).binding
+        //companion object를 이용해 전역변수로 선언한 var orderlist = mutableListOf<orderSet>() 사용
+        var orderham = ArrayList<Hamburger>() //햄버거들의 리스트를 저장할 객체 리스트, Adapter돌때마다 초기화
+        var orderdrink = ArrayList<Drink>() //음료들의 리스트를 저장할 객체 리스트, Adapter돌때마다 초기화
+        var orderside = ArrayList<Side>() //사이드들의 리스트를 저장할 객체 리스트, Adapter돌때마다 초기화
+        orderlist = mutableListOf() //Adapter돌때마다 초기화
+        //이제 위의 리스트에 멤버를 다 넣은 다음에
+        //orderlist에 마지막에 다 넣어서 주문하기 버튼을 누르면 intent로 넘겨준다
+        for(i in 0..dataSet.size-1) {
+            if(dataSet[i].type==0) { //DataSet안에 들어있는 놈이 햄버거라면
+                orderham.add(Hamburger(dataSet[i].image
+                    , dataSet[i].name
+                    , dataSet[i].price
+                    , dataSet[i].patty
+                    , dataSet[i].taste
+                    , 0
+                    , dataSet[i].orderCount))
+            }
+            else if(dataSet[i].type==1) { //DataSet안에 들어있는 놈이 사이드라면
+                orderside.add(Side(dataSet[i].image
+                    , dataSet[i].name
+                    , dataSet[i].price
+                    , dataSet[i].orderCount))
+            }
+            else if(dataSet[i].type==2) { //DataSet안에 들어있는 놈이 음료라면
+                orderdrink.add(Drink(dataSet[i].image
+                    , dataSet[i].name
+                    , dataSet[i].price
+                    , dataSet[i].orderCount))
+            }
+        }
+        orderlist.add(orderSet(orderham, orderdrink, orderside))
+        Log.d("Check orderList(Burger)", "${orderham}")
+        Log.d("Check orderList(Drink)", "${orderdrink}")
+        Log.d("Check orderList(Side)", "${orderside}")
+
+        Glide.with(holder.itemView)
+            .load(dataSet[position].image)
+            .into(viewholder.orderimg)
+        viewholder.ordername.text = dataSet[position].name
+        viewholder.orderprice.text = (dataSet[position].price.toInt()*dataSet[position].orderCount).toString()
+        viewholder.ordercnt.text = dataSet[position].orderCount.toString()
+        viewholder.orederDelete.setOnClickListener() {//삭제버튼을 눌렀을 때
+            removeItem(position)
+
+        }
+        viewholder.orderplus.setOnClickListener() {
+            viewholder.ordercnt.text = (viewholder.ordercnt.text.toString().toInt() + 1).toString()
+            dataSet[position].orderCount = viewholder.ordercnt.text.toString().toInt()
+            viewholder.orderprice.text = (dataSet[position].price.toInt() * dataSet[position].orderCount).toString()
+        }
+        viewholder.orderminus.setOnClickListener() {
+            viewholder.ordercnt.text = (viewholder.ordercnt.text.toString().toInt() - 1).toString()
+            dataSet[position].orderCount = viewholder.ordercnt.text.toString().toInt()
+            viewholder.orderprice.text = (dataSet[position].price.toInt() * dataSet[position].orderCount).toString()
+        }
+        //주문하기 버튼을 클릭했을 때 dataSet에 담긴 녀석들의 정보를 orderSet으로 전달해주어야 한다.
+
+
+    }
+
+    override fun getItemCount(): Int {
+        return dataSet.size
+    }
+
+    fun removeItem(position : Int) {
+        if(position >= 0) {
+            dataSet[position].orderCount = 1
+            dataSet.removeAt(position)
+            notifyDataSetChanged()
+        }
+    }
+
 }

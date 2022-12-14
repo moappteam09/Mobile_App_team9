@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="320dp"
+    android:layout_height="100dp"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:gravity="center"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/orderimg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@android:drawable/ic_dialog_alert"
             android:background="#FFFFFF" />
         <TextView
+            android:id="@+id/ordername"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:layout_marginLeft="10dp"
             android:text="메뉴명" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="10dp"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/border_round_orange"
+        <Button
+            android:id="@+id/orederDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:textSize="15dp"
+            android:text="X"
+            android:textColor="#000000"
+            android:backgroundTint="@color/white"
             android:layout_marginHorizontal="10dp"
-            android:text="취소" />
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="33dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
         <android.widget.Button
+            android:id="@+id/orderplus"
             android:layout_marginLeft="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:text="+"
             android:background="@drawable/border_round"/>
         <TextView
+            android:id="@+id/ordercnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
             android:textColor="#000000"
-            android:text="0" />
+            android:text="1" />
         <android.widget.Button
+            android:id="@+id/orderminus"
             android:layout_marginLeft="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:text="-"
             android:background="@drawable/border_round"/>
         <TextView
@@ -62,6 +68,7 @@
             android:textColor="#000000"
             android:text="금액 | " />
         <TextView
+            android:id="@+id/orderprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -69,5 +76,4 @@
             android:textColor="#000000"
             android:text="0000원" />
     </LinearLayout>
-
 </LinearLayout>
