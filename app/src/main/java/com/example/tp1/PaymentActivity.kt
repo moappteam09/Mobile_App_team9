@@ -63,6 +63,24 @@ class PaymentActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val dataName = mutableListOf<String>()
+        var hamSold = 0
+        var sideSold = 0
+        var drinkSold = 0
+        var hamStock = 0
+        database.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                hamSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
+                sideSold = snapshot.child("sales").child("side").getValue().toString().toInt()
+                drinkSold = snapshot.child("sales").child("drink").getValue().toString().toInt()
+                dataName.clear()
+                for (i in snapshot.child("user").child(numbers.toString()).children)
+                    dataName.add(i.key.toString())
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
         val mainIntent = Intent(this, MainActivity::class.java)
         mainIntent.putExtra("start", 1)
         //mainIntent.putExtra("origStock", origStock as java.io.Serializable)
@@ -72,22 +90,11 @@ class PaymentActivity : AppCompatActivity() {
                 for (i in hamOrders.toString().split(",")) {
                     var splited = i.split("!")
                     if (splited.size > 1)
-                        database.child("hamburger").child(convertBurgerName(splited[0])).child("stock").setValue((splited[2].toInt() - splited[1].toInt()).toString())
+                        database.child("hamburger").child(convertBurgerName(splited[0])).child("stock").setValue((hamStock - splited[1].toInt()).toString())
                 }
                 startActivity(mainIntent)
             }
         }
-
-        val dataName = mutableListOf<String>()
-        database.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                dataName.clear()
-                for (i in snapshot.child("user").child(numbers.toString()).children)
-                    dataName.add(i.key.toString())
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }) // 리스너 등록
 
         fun payMethod() {
             if (whereFrom == 1 && numbers.toString().length == 8) {
@@ -110,19 +117,6 @@ class PaymentActivity : AppCompatActivity() {
                 setBase.child("side").setValue(sides)
                 setBase.child("drink").setValue(drinks)
             }
-
-            var hamSold = 0
-            var sideSold = 0
-            var drinkSold = 0
-            database.addValueEventListener(object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    hamSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
-                    sideSold = snapshot.child("sales").child("side").getValue().toString().toInt()
-                    drinkSold = snapshot.child("sales").child("drink").getValue().toString().toInt()
-                }
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
 
             var hams = orderSet3.toString().split("?")[0]
             for (i in hams.split(","))
