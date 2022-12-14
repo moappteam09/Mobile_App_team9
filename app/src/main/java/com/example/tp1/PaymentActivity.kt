@@ -67,7 +67,9 @@ class PaymentActivity : AppCompatActivity() {
         var hamSold = 0
         var sideSold = 0
         var drinkSold = 0
-        var hamStock = 0
+        val hamStocks = mutableListOf<String>()
+        val sideStocks = mutableListOf<String>()
+        val drinkStocks = mutableListOf<String>()
         database.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 hamSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
@@ -76,6 +78,15 @@ class PaymentActivity : AppCompatActivity() {
                 dataName.clear()
                 for (i in snapshot.child("user").child(numbers.toString()).children)
                     dataName.add(i.key.toString())
+                hamStocks.clear()
+                sideStocks.clear()
+                drinkStocks.clear()
+                for (i in snapshot.child("hamburger").children)
+                    hamStocks.add(i.key.toString() + "," + i.child("stock").getValue().toString())
+                for (i in snapshot.child("side").children)
+                    sideStocks.add(i.key.toString() + "," + i.child("stock").getValue().toString())
+                for (i in snapshot.child("drink").children)
+                    drinkStocks.add(i.key.toString() + "," + i.child("stock").getValue().toString())
             }
             override fun onCancelled(error: DatabaseError) {
             }
@@ -87,11 +98,6 @@ class PaymentActivity : AppCompatActivity() {
         var	alertDialog = AlertDialog.Builder(this)
         val eventHandler = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
-                for (i in hamOrders.toString().split(",")) {
-                    var splited = i.split("!")
-                    if (splited.size > 1)
-                        database.child("hamburger").child(convertBurgerName(splited[0])).child("stock").setValue((hamStock - splited[1].toInt()).toString())
-                }
                 startActivity(mainIntent)
             }
         }
@@ -119,17 +125,53 @@ class PaymentActivity : AppCompatActivity() {
             }
 
             var hams = orderSet3.toString().split("?")[0]
+            hams = hams.replace(hams.split("!")[0], convertBurgerName(hams.split("!")[0]))
             for (i in hams.split(","))
-                if (i.split("|").size > 1)
-                    database.child("sales").child("hamburger").setValue(hamSold + i.split("|")[1].toInt())
+                if (i.split("|").size > 1) {
+                    database.child("sales").child("hamburger")
+                        .setValue(hamSold + i.split("|")[1].toInt())
+                    var name = ""
+                    var stock = ""
+                    for (j in hamStocks)
+                        if (j.split(",")[0].equals(i.split("!")[0])) {
+                            name = i.split("!")[0]
+                            stock = j.split(",")[1]
+                        }
+                    database.child("hamburger").child(name).child("stock")
+                        .setValue((stock.toInt() - i.split("|")[0].split("!")[1].toInt()).toString())
+                }
             var sides = orderSet3.toString().split("?")[1]
+            sides = sides.replace(sides.split("!")[0], convertBurgerName(sides.split("!")[0]))
             for (i in sides.split(","))
-                if (i.split("|").size > 1)
-                    database.child("sales").child("side").setValue(sideSold + i.split("|")[1].toInt())
+                if (i.split("|").size > 1) {
+                    database.child("sales").child("side")
+                        .setValue(sideSold + i.split("|")[1].toInt())
+                    var name = ""
+                    var stock = ""
+                    for (j in sideStocks)
+                        if (j.split(",")[0].equals(i.split("!")[0])) {
+                            name = i.split("!")[0]
+                            stock = j.split(",")[1]
+                        }
+                    database.child("side").child(name).child("stock")
+                        .setValue((stock.toInt() - i.split("|")[0].split("!")[1].toInt()).toString())
+                }
             var drinks = orderSet3.toString().split("?")[2]
+            drinks = drinks.replace(drinks.split("!")[0], convertBurgerName(drinks.split("!")[0]))
             for (i in drinks.split(","))
-                if (i.split("|").size > 1)
-                    database.child("sales").child("drink").setValue(drinkSold + i.split("|")[1].toInt())
+                if (i.split("|").size > 1) {
+                    database.child("sales").child("drink")
+                        .setValue(drinkSold + i.split("|")[1].toInt())
+                    var name = ""
+                    var stock = ""
+                    for (j in drinkStocks)
+                        if (j.split(",")[0].equals(i.split("!")[0])) {
+                            name = i.split("!")[0]
+                            stock = j.split(",")[1]
+                        }
+                    database.child("drink").child(name).child("stock")
+                        .setValue((stock.toInt() - i.split("|")[0].split("!")[1].toInt()).toString())
+                }
 
             alertDialog.setTitle("Payment")
             alertDialog.setMessage("결제가 완료되었습니다!")
