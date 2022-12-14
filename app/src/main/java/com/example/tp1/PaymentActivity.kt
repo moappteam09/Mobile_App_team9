@@ -141,7 +141,7 @@ class PaymentActivity : AppCompatActivity() {
                         .setValue((stock.toInt() - i.split("|")[0].split("!")[1].toInt()).toString())
                 }
             var sides = orderSet3.toString().split("?")[1]
-            sides = sides.replace(sides.split("!")[0], convertBurgerName(sides.split("!")[0]))
+            sides = sides.replace(sides.split("!")[0], convertSideName(sides.split("!")[0]))
             for (i in sides.split(","))
                 if (i.split("|").size > 1) {
                     database.child("sales").child("side")
@@ -157,7 +157,7 @@ class PaymentActivity : AppCompatActivity() {
                         .setValue((stock.toInt() - i.split("|")[0].split("!")[1].toInt()).toString())
                 }
             var drinks = orderSet3.toString().split("?")[2]
-            drinks = drinks.replace(drinks.split("!")[0], convertBurgerName(drinks.split("!")[0]))
+            drinks = drinks.replace(drinks.split("!")[0], convertDrinkName(drinks.split("!")[0]))
             for (i in drinks.split(","))
                 if (i.split("|").size > 1) {
                     database.child("sales").child("drink")

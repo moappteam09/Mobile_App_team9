@@ -107,20 +107,16 @@ class AdminList  : AppCompatActivity() {
                     }
                 }
                 (binding.adminRecyclerView.adapter as AdminList_Adapter).notifyDataSetChanged()
-                var tvBurger = findViewById<TextView>(R.id.admin_textview_burger_sale)
+                val salesText = findViewById<TextView>(R.id.salesText)
                 Log.d("최종", "burgersold before ${burgerSold}")
                 burgerSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
                 sideSold = snapshot.child("sales").child("side").getValue().toString().toInt()
                 drinkSold = snapshot.child("sales").child("drink").getValue().toString().toInt()
-                tvBurger.text = burgerSold.toString()
-                var tvDrink = findViewById<TextView>(R.id.admin_textview_drink_sale)
-                tvDrink.text = drinkSold.toString()
-                var tvSide = findViewById<TextView>(R.id.admin_textview_side_sale)
-                tvSide.text = sideSold.toString()
-                tvSide.text = snapshot.child("sales").child("side").getValue().toString()
-                var tvTotal = findViewById<TextView>(R.id.admin_textview_total_sale)
                 val total : Int = burgerSold + drinkSold + sideSold
-                tvTotal.text = total.toString()
+                salesText.text = "햄버거: " + burgerSold.toString() +
+                        "원 | 사이드: " + sideSold.toString() +
+                        "원\n드링크: " + drinkSold.toString() +
+                        "원 ||| 전체: " + total.toString()
             }
             override fun onCancelled(error: DatabaseError) {
                 print(error.message)
