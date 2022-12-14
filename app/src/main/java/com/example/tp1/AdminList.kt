@@ -36,7 +36,7 @@ class AdminList  : AppCompatActivity() {
         binding.adminRecyclerView.layoutManager = LinearLayoutManager(this@AdminList)
         binding.adminRecyclerView.adapter = AdminList_Adapter(alllist)
 
-        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
+        //val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 //        for(i : AllMenuStock in origStock){
 //            Log.d("origstock", "${i.kind} , ${i.name} , ${i.price} , ${i.left}")
 //        }
@@ -61,10 +61,10 @@ class AdminList  : AppCompatActivity() {
                                 var price = item.child("price").getValue().toString()
                                 //받은 데이터를 Allmenu클래스에 담기
                                 alllist.add(AllMenuStock(kind, image, name, price, left))
-                                Log.d("매출", "계산 결과 ${name} : ${calcSoldQuantity(kind, left, name, origStock)}")
-                                Log.d("매출", "계산 결과 ${name} : ${(calcSoldQuantity(kind, left, name, origStock) * price.toInt())}")
+                                //Log.d("매출", "계산 결과 ${name} : ${calcSoldQuantity(kind, left, name, origStock)}")
+                                //Log.d("매출", "계산 결과 ${name} : ${(calcSoldQuantity(kind, left, name, origStock) * price.toInt())}")
                                 Log.d("매출", "burgersold before ${burgerSold}")
-                                burgerSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
+                                //burgerSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
                                 Log.d("매출", "burgersold after ${burgerSold}")
                             }
                         }
@@ -83,7 +83,7 @@ class AdminList  : AppCompatActivity() {
                                 var price = item.child("price").getValue().toString()
                                 //받은 데이터를 Allmenu클래스에 담기
                                 alllist.add(AllMenuStock(kind, image, name, price, left))
-                                drinkSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
+                                //drinkSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
                             }
                         }
                     }
@@ -101,7 +101,7 @@ class AdminList  : AppCompatActivity() {
                                 var price = item.child("price").getValue().toString()
                                 //받은 데이터를 Allmenu클래스에 담기
                                 alllist.add(AllMenuStock(kind, image, name, price, left))
-                                sideSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
+                                //sideSold += (calcSoldQuantity(kind, left, name, origStock) * price.toInt())
                             }
                         }
                     }
@@ -109,11 +109,15 @@ class AdminList  : AppCompatActivity() {
                 (binding.adminRecyclerView.adapter as AdminList_Adapter).notifyDataSetChanged()
                 var tvBurger = findViewById<TextView>(R.id.admin_textview_burger_sale)
                 Log.d("최종", "burgersold before ${burgerSold}")
+                burgerSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
+                sideSold = snapshot.child("sales").child("side").getValue().toString().toInt()
+                drinkSold = snapshot.child("sales").child("drink").getValue().toString().toInt()
                 tvBurger.text = burgerSold.toString()
                 var tvDrink = findViewById<TextView>(R.id.admin_textview_drink_sale)
                 tvDrink.text = drinkSold.toString()
                 var tvSide = findViewById<TextView>(R.id.admin_textview_side_sale)
                 tvSide.text = sideSold.toString()
+                tvSide.text = snapshot.child("sales").child("side").getValue().toString()
                 var tvTotal = findViewById<TextView>(R.id.admin_textview_total_sale)
                 val total : Int = burgerSold + drinkSold + sideSold
                 tvTotal.text = total.toString()
@@ -137,13 +141,13 @@ class AdminList  : AppCompatActivity() {
 //        for(i : AllMenuStock in origStock){
 //            Log.d("origstock", "${i.kind} , ${i.name} , ${i.price} , ${i.left}")
 //        }
-        for(i : AllMenuStock in origStock){
-            //Log.d("매출", "어디 찾아봅시다 ${i.kind} , ${kind} , ${i.name}, ${name}")
-            if(i.kind == kind && i.name == name){
-                Log.d("매출", "if문 안으로 들어왔어요${i.kind} , ${kind} , ${i.name}, ${name}, ${i.left}, ${left}")
-                return i.left.toInt() - left.toInt()
-            }
-        }
+//        for(i : AllMenuStock in origStock){
+//            //Log.d("매출", "어디 찾아봅시다 ${i.kind} , ${kind} , ${i.name}, ${name}")
+//            if(i.kind == kind && i.name == name){
+//                Log.d("매출", "if문 안으로 들어왔어요${i.kind} , ${kind} , ${i.name}, ${name}, ${i.left}, ${left}")
+//                return i.left.toInt() - left.toInt()
+//            }
+//        }
         return 0
     }
 }

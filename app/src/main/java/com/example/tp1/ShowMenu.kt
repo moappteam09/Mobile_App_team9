@@ -30,11 +30,14 @@ import com.google.firebase.ktx.Firebase
 //메뉴를 선택하는 화면을 보여주는 클래스
 //spinner구현해야함
 
+lateinit var orderListToPay: orderSet
+
 class ShowMenu  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         val binding = SelectMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
         var inform_ham = intent.getStringExtra("Patty_and_Taste")
         if (inform_ham.isNullOrEmpty())
             inform_ham = "0 0"
@@ -203,15 +206,23 @@ class ShowMenu  : AppCompatActivity() {
             binding.spinTaste.visibility = View.INVISIBLE
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
             binding.menuRecycler.adapter = ShowAll_Adapter(sideall, 1, binding)
-
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         val order = findViewById <Button>(R.id.btn_buy)  //주문하기 버튼
         order.setOnClickListener{
-            val intent = Intent(this, PaymentActivity::class.java)
-            startActivity(intent)
+            if (orderListToPay.ham.size > 0 || orderListToPay.side.size > 0 || orderListToPay.drink.size > 0) {
+                val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("whereFrom", 1)
+                intent.putExtra("orderSet", orderListToPay.getAll())
+                intent.putExtra("orderSet2", orderListToPay.getAllByDivision())
+                intent.putExtra("orderSet3", orderListToPay.getAllByDivisionPlusPrice())
+                intent.putExtra("totalPrice", orderListToPay.getTotalPrice())
+                intent.putExtra("hamOrders", orderListToPay.getHamburger())
+                //intent.putExtra("origStock", origStock as java.io.Serializable)
+                startActivity(intent)
+            }
         }
         binding.selectmenuRecycler.layoutManager = LinearLayoutManager(this)
     }
@@ -233,6 +244,7 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
         var orderdrink = ArrayList<Drink>() //음료들의 리스트를 저장할 객체 리스트, Adapter돌때마다 초기화
         var orderside = ArrayList<Side>() //사이드들의 리스트를 저장할 객체 리스트, Adapter돌때마다 초기화
         orderlist = mutableListOf() //Adapter돌때마다 초기화
+        orderListToPay = orderSet(orderham, orderdrink, orderside)
         //이제 위의 리스트에 멤버를 다 넣은 다음에
         //orderlist에 마지막에 다 넣어서 주문하기 버튼을 누르면 intent로 넘겨준다
         for(i in 0..dataSet.size-1) {

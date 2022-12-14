@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     var price = item.child("price").getValue().toString()
                     Log.d("BurgerDataCheck", "kind : ${kind}, name : ${name}, stock : ${left}")
                     //받은 데이터를 Allmenu클래스에 담기
-                    origStock.add(AllMenuStock(kind, image, name, price, left))
+                    //origStock.add(AllMenuStock(kind, image, name, price, left))
                 }
             }
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     var price = item.child("price").getValue().toString()
                     Log.d("DrinkDataCheck", "kind : ${kind}, name : ${name}, stock : ${left}")
                     //받은 데이터를 Allmenu클래스에 담기
-                    origStock.add(AllMenuStock(kind, image, name, price, left))
+                    //origStock.add(AllMenuStock(kind, image, name, price, left))
                 }
             }
 
@@ -68,19 +68,23 @@ class MainActivity : AppCompatActivity() {
                     var price = item.child("price").getValue().toString()
                     Log.d("SideDataCheck", "kind : ${kind}, name : ${name}, stock : ${left}")
                     //받은 데이터를 Allmenu클래스에 담기
-                    origStock.add(AllMenuStock(kind, image, name, price, left))
+                    //origStock.add(AllMenuStock(kind, image, name, price, left))
                 }
             }
             origStock2 = origStock
         }
         else{
-            var origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
-            origStock2 = origStock
+            //var origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
+            //origStock2 = origStock
         }
 
         val firstVisit = findViewById<Button>(R.id.main_btn1)
         firstVisit.setOnClickListener{
             val intent = Intent(this, ChoosePatty::class.java)
+            //intent.putExtra("origStock", origStock2 as java.io.Serializable)
+//            for(i : AllMenuStock in origStock2){
+//                Log.d("origstock", "${i.kind} , ${i.name} , ${i.price} , ${i.left}")
+//            }
             startActivity(intent)
         }
 
@@ -88,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         secondVisit.setOnClickListener{
             val intent = Intent(this, EnterPhoneNumber::class.java)
             intent.putExtra("whereFrom", 0) // 전화번호 레이아웃 재사용 위함 | 0: 기존 고객, 1: 새로운 고객
-            intent.putExtra("origStock", origStock2 as java.io.Serializable)
+            //intent.putExtra("origStock", origStock2 as java.io.Serializable)
             for(i : AllMenuStock in origStock2){
                 Log.d("origstock", "${i.kind} , ${i.name} , ${i.price} , ${i.left}")
             }

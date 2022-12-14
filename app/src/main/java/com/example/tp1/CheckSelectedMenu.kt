@@ -59,9 +59,10 @@ class CheckSelectedMenu : AppCompatActivity() {
                     intent.putExtra("numbers", numbers)
                     intent.putExtra("orderSet", dataSet[position].getAll())
                     intent.putExtra("orderSet2", dataSet[position].getAllByDivision())
+                    intent.putExtra("orderSet3", dataSet[position].getAllByDivisionPlusPrice())
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     intent.putExtra("hamOrders", dataSet[position].getHamburger())
-                    intent.putExtra("origStock", origStock as java.io.Serializable)
+                    //intent.putExtra("origStock", origStock as java.io.Serializable)
                     startActivity(intent)
                     database.onDisconnect()
                     finish()
@@ -164,7 +165,7 @@ class CheckSelectedMenu : AppCompatActivity() {
         val orderBtn = binding.checkListOrderbtn
         orderBtn.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("origStock", origStock as java.io.Serializable)
+            //intent.putExtra("origStock", origStock as java.io.Serializable)
             startActivity(intent)
         }
     }

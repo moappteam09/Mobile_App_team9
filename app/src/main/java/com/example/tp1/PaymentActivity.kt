@@ -33,8 +33,10 @@ class PaymentActivity : AppCompatActivity() {
         val numbers = intent.getStringExtra("numbers")
         val orderSet = intent.getStringExtra("orderSet")
         val orderSet2 = intent.getStringExtra("orderSet2")
+        val orderSet3 = intent.getStringExtra("orderSet3") // 매출 가격 문제로 임시로 해결
         val hamOrders = intent.getStringExtra("hamOrders")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
+        //val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 
         binding.totalOrder.setMovementMethod(ScrollingMovementMethod())
         if (orderSet != null) {
@@ -54,18 +56,23 @@ class PaymentActivity : AppCompatActivity() {
             intent.putExtra("whereFrom", whereFrom)
             intent.putExtra("orderSet", orderSet)
             intent.putExtra("orderSet2", orderSet2)
+            intent.putExtra("orderSet3", orderSet3)
             intent.putExtra("hamOrders", hamOrders)
             intent.putExtra("totalPrice", totalPrice)
+            //intent.putExtra("origStock", origStock as java.io.Serializable)
             startActivity(intent)
         }
 
         val mainIntent = Intent(this, MainActivity::class.java)
+        mainIntent.putExtra("start", 1)
+        //mainIntent.putExtra("origStock", origStock as java.io.Serializable)
         var	alertDialog = AlertDialog.Builder(this)
         val eventHandler = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 for (i in hamOrders.toString().split(",")) {
                     var splited = i.split("!")
-                    database.child("hamburger").child(convertBurgerName(splited[0])).child("stock").setValue((splited[2].toInt() - splited[1].toInt()).toString())
+                    if (splited.size > 1)
+                        database.child("hamburger").child(convertBurgerName(splited[0])).child("stock").setValue((splited[2].toInt() - splited[1].toInt()).toString())
                 }
                 startActivity(mainIntent)
             }
@@ -103,6 +110,32 @@ class PaymentActivity : AppCompatActivity() {
                 setBase.child("side").setValue(sides)
                 setBase.child("drink").setValue(drinks)
             }
+
+            var hamSold = 0
+            var sideSold = 0
+            var drinkSold = 0
+            database.addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    hamSold = snapshot.child("sales").child("hamburger").getValue().toString().toInt()
+                    sideSold = snapshot.child("sales").child("side").getValue().toString().toInt()
+                    drinkSold = snapshot.child("sales").child("drink").getValue().toString().toInt()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+
+            var hams = orderSet3.toString().split("?")[0]
+            for (i in hams.split(","))
+                if (i.split("|").size > 1)
+                    database.child("sales").child("hamburger").setValue(hamSold + i.split("|")[1].toInt())
+            var sides = orderSet3.toString().split("?")[1]
+            for (i in sides.split(","))
+                if (i.split("|").size > 1)
+                    database.child("sales").child("side").setValue(sideSold + i.split("|")[1].toInt())
+            var drinks = orderSet3.toString().split("?")[2]
+            for (i in drinks.split(","))
+                if (i.split("|").size > 1)
+                    database.child("sales").child("drink").setValue(drinkSold + i.split("|")[1].toInt())
 
             alertDialog.setTitle("Payment")
             alertDialog.setMessage("결제가 완료되었습니다!")

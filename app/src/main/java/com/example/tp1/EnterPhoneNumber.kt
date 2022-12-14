@@ -15,9 +15,10 @@ class EnterPhoneNumber : AppCompatActivity() {
         val whereFrom = intent.getIntExtra("whereFrom", 0)
         val orderSet = intent.getStringExtra("orderSet")
         val orderSet2 = intent.getStringExtra("orderSet2")
+        val orderSet3 = intent.getStringExtra("orderSet3")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
         val hamOrders = intent.getStringExtra("hamOrders")
-        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
+        //val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 //        for(i : AllMenuStock in origStock){
 //            Log.d("origstock", "${i.name}")
 //        }
@@ -50,11 +51,12 @@ class EnterPhoneNumber : AppCompatActivity() {
                     intent.putExtra("whereFrom", whereFrom)
                     intent.putExtra("orderSet", orderSet)
                     intent.putExtra("orderSet2", orderSet2)
+                    intent.putExtra("orderSet3", orderSet3)
                     intent.putExtra("totalPrice", totalPrice)
                     intent.putExtra("hamOrders", hamOrders)
                 }
                 intent.putExtra("numbers", numbers)
-                intent.putExtra("origStock", origStock as java.io.Serializable)
+                //intent.putExtra("origStock", origStock as java.io.Serializable)
                 startActivity(intent)
             }
         }
@@ -87,7 +89,7 @@ class EnterPhoneNumber : AppCompatActivity() {
                 numbers = numbers.slice(IntRange(0, numbers.length - 2))
             if (stack > 4) {
                 val intent = Intent(this, AdminList::class.java)
-                intent.putExtra("origStock", origStock as java.io.Serializable)
+                //intent.putExtra("origStock", origStock as java.io.Serializable)
                 startActivity(intent)
             }
             printNum()
