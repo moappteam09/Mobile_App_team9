@@ -24,6 +24,7 @@ class CheckSelectedMenu : AppCompatActivity() {
     var numbers: String? = ""
 
     var dataSet = mutableListOf<orderSet>()
+    var dataName = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -49,17 +50,21 @@ class CheckSelectedMenu : AppCompatActivity() {
                 binding.itemName.text =	dataSet[position].getFullName()
                 binding.itemPrice.text = dataSet[position].getTotalPrice().toString()
                 binding.delBtn.setOnClickListener { // 뷰에 이벤트 추가
-                    database.child("user").child(numbers.toString()).child("set" + (position + 1)).setValue(null)
+                    database.child("user").child(numbers.toString()).child(dataName[position]).setValue(null)
                     notifyDataSetChanged()
                 }
                 binding.root.setOnClickListener { // 뷰에 이벤트 추가
                     val intent = Intent(this@CheckSelectedMenu, PaymentActivity::class.java)
+                    intent.putExtra("whereFrom", 0)
                     intent.putExtra("numbers", numbers)
                     intent.putExtra("orderSet", dataSet[position].getAll())
+                    intent.putExtra("orderSet2", dataSet[position].getAllByDivision())
                     intent.putExtra("totalPrice", dataSet[position].getTotalPrice())
                     intent.putExtra("hamOrders", dataSet[position].getHamburger())
                     intent.putExtra("origStock", origStock as java.io.Serializable)
                     startActivity(intent)
+                    database.onDisconnect()
+                    finish()
                 }
             }
             override fun getItemCount(): Int {
@@ -72,6 +77,7 @@ class CheckSelectedMenu : AppCompatActivity() {
         database.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 dataSet.clear()
+                dataName.clear()
                 var data = snapshot.child("user").children
                 for (i in data) {
                     for (l in i.children) {
@@ -82,6 +88,7 @@ class CheckSelectedMenu : AppCompatActivity() {
                             var hams = mutableListOf<Hamburger>()
                             var drinks = mutableListOf<Drink>()
                             var sides = mutableListOf<Side>()
+                            dataName.add(l.key.toString())
                             fun hamAdd(k: DataSnapshot, orderCount : Int) {
                                 hams.add(
                                     Hamburger(
@@ -118,19 +125,32 @@ class CheckSelectedMenu : AppCompatActivity() {
                                 )
                             }
 
-                            var splitString = l.child("hamburger").getValue().toString().split(",")
-                            if (l.child("hamburger").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    hamAdd(hamData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            splitString = l.child("drink").getValue().toString().split(",")
-                            if (l.child("drink").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    drinkAdd(drinkData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            splitString = l.child("side").getValue().toString().split(",")
-                            if (l.child("side").getValue().toString().isNotEmpty())
-                                for (j in splitString)
-                                    sideAdd(sideData.child(j.split("!")[0]), j.split("!")[1].toInt())
-                            dataSet.add(orderSet(hams, drinks, sides))
+                            if (l.child("hamburger").getValue() != null
+                                && l.child("drink").getValue() != null
+                                && l.child("side").getValue() != null) {
+                                var splitString = l.child("hamburger").getValue().toString().split(",")
+                                if (l.child("hamburger").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        hamAdd(
+                                            hamData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                splitString = l.child("drink").getValue().toString().split(",")
+                                if (l.child("drink").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        drinkAdd(
+                                            drinkData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                splitString = l.child("side").getValue().toString().split(",")
+                                if (l.child("side").getValue().toString().isNotEmpty())
+                                    for (j in splitString)
+                                        sideAdd(
+                                            sideData.child(j.split("!")[0]),
+                                            j.split("!")[1].toInt()
+                                        )
+                                dataSet.add(orderSet(hams, drinks, sides))
+                            }
                         }
                     }
                 }

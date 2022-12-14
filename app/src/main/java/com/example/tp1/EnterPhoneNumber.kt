@@ -14,6 +14,7 @@ class EnterPhoneNumber : AppCompatActivity() {
 
         val whereFrom = intent.getIntExtra("whereFrom", 0)
         val orderSet = intent.getStringExtra("orderSet")
+        val orderSet2 = intent.getStringExtra("orderSet2")
         val totalPrice = intent.getIntExtra("totalPrice", 0)
         val hamOrders = intent.getStringExtra("hamOrders")
         val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
@@ -46,7 +47,9 @@ class EnterPhoneNumber : AppCompatActivity() {
                     intent = Intent(this, CheckSelectedMenu::class.java)
                 else {
                     intent = Intent(this, PaymentActivity::class.java)
+                    intent.putExtra("whereFrom", whereFrom)
                     intent.putExtra("orderSet", orderSet)
+                    intent.putExtra("orderSet2", orderSet2)
                     intent.putExtra("totalPrice", totalPrice)
                     intent.putExtra("hamOrders", hamOrders)
                 }

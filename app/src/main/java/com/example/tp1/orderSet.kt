@@ -78,6 +78,27 @@ class orderSet {
         return string
     }
 
+    fun getAllByDivision(): String {
+        var string = ""
+        for (i in ham)
+            string += i.name + "!" + i.orderCount +  ","
+        if (string.length > 0 && string.slice(IntRange(string.length - 1, string.length - 1)).equals(","))
+            string = string.slice(IntRange(0, string.length - 2)) + "?"
+        else
+            string = string + "?"
+        for (i in side)
+            string += i.name + "!" + i.orderCount + ","
+        if (string.length > 0 && string.slice(IntRange(string.length - 1, string.length - 1)).equals(","))
+            string = string.slice(IntRange(0, string.length - 2)) + "?"
+        else
+            string = string + "?"
+        for (i in drink)
+            string += i.name + "!" + i.orderCount + ","
+        if (string.length > 0 && string.slice(IntRange(string.length - 1, string.length - 1)).equals(","))
+            string = string.slice(IntRange(0, string.length - 2))
+        return string
+    }
+
     fun getHamburger() : String {
         var string = ""
         for (i in ham)
