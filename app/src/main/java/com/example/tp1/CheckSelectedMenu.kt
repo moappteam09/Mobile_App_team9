@@ -32,7 +32,6 @@ class CheckSelectedMenu : AppCompatActivity() {
         setContentView(binding.root)
         database = Firebase.database.reference
         dataSet.clear()
-        val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 
         class MyViewHolder(val binding: ItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
         class MyAdapter(val dataSet: MutableList<orderSet>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {

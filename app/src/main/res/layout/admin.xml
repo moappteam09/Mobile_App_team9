@@ -58,6 +58,22 @@
         >
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/admin_stock_reset"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/border_round_orange"
+            android:paddingVertical="10dp"
+            android:text="매출 기록 초기화" />
+        
+        <Space
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/admin_confirm"
             android:layout_width="100dp"
             android:layout_height="wrap_content"

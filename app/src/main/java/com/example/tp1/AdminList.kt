@@ -130,6 +130,14 @@ class AdminList  : AppCompatActivity() {
             startActivity(intent)
         }
 
+        var stockResetBtn = findViewById<Button>(R.id.admin_stock_reset)
+        stockResetBtn.setOnClickListener{
+            var reset = 0
+            all_hamburger.child("sales").child("hamburger").setValue(reset)
+            all_hamburger.child("sales").child("drink").setValue(reset)
+            all_hamburger.child("sales").child("side").setValue(reset)
+
+        }
 
     }
 
