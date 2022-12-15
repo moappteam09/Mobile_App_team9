@@ -14,6 +14,13 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+val hamsName = mutableListOf<String>()
+val hamsKey = mutableListOf<String>()
+val sidesName = mutableListOf<String>()
+val sidesKey = mutableListOf<String>()
+val drinksName = mutableListOf<String>()
+val drinksKey = mutableListOf<String>()
+
 class AdminList_ViewHolder (val binding : ItemLayoutStockBinding) : RecyclerView.ViewHolder(binding.root)
 
 class AdminList_Adapter(val dataSet: MutableList<AllMenuStock>) :
@@ -31,6 +38,41 @@ class AdminList_Adapter(val dataSet: MutableList<AllMenuStock>) :
         //메뉴 이름 : stock_menu_name
         //메뉴 재고 : stock_current_stock
 
+        val database = Firebase.database.reference
+        database.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                hamsName.clear()
+                hamsKey.clear()
+                sidesName.clear()
+                sidesKey.clear()
+                drinksName.clear()
+                drinksKey.clear()
+                for (i in snapshot.child("hamburger").children) {
+                    hamsName.add(i.child("name").getValue().toString())
+                    hamsKey.add(i.key.toString())
+                    Log.d("debug", i.key.toString() + " " + i.child("name").getValue().toString())
+                }
+                for (i in snapshot.child("side").children) {
+                    sidesName.add(i.child("name").getValue().toString())
+                    sidesKey.add(i.key.toString())
+                    Log.d("debug", i.key.toString() + " " + i.child("name").getValue().toString())
+                }
+                for (i in snapshot.child("drink").children) {
+                    drinksName.add(i.child("name").getValue().toString())
+                    drinksKey.add(i.key.toString())
+                    Log.d("debug", i.key.toString() + " " + i.child("name").getValue().toString())
+                }
+                hamsName.add("")
+                hamsKey.add("")
+                sidesName.add("")
+                sidesKey.add("")
+                drinksName.add("")
+                drinksKey.add("")
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
 
         Glide.with(holder.itemView)
             .load(dataSet[position].image) // 불러올 이미지 url
@@ -42,17 +84,27 @@ class AdminList_Adapter(val dataSet: MutableList<AllMenuStock>) :
         binding.stockInc.setOnClickListener{
             val database = Firebase.database.reference
             originalStock += 1
-            database.child("${dataSet[holder.adapterPosition].kind}").child(convertBurgerName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+            if (dataSet[position].kind.equals("hamburger"))
+                database.child("${dataSet[holder.adapterPosition].kind}").child(convertBurgerName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+            else if (dataSet[position].kind.equals("side"))
+                database.child("${dataSet[holder.adapterPosition].kind}").child(convertSideName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+            else
+                database.child("${dataSet[holder.adapterPosition].kind}").child(convertDrinkName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
             notifyDataSetChanged()
         }
         binding.stockDec.setOnClickListener{
             val database = Firebase.database.reference
-            originalStock -= 1
-            database.child("${dataSet[holder.adapterPosition].kind}").child(convertBurgerName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
-            notifyDataSetChanged()
+            if (originalStock > 0) {
+                originalStock -= 1
+                if (dataSet[position].kind.equals("hamburger"))
+                    database.child("${dataSet[holder.adapterPosition].kind}").child(convertBurgerName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+                else if (dataSet[position].kind.equals("side"))
+                    database.child("${dataSet[holder.adapterPosition].kind}").child(convertSideName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+                else
+                    database.child("${dataSet[holder.adapterPosition].kind}").child(convertDrinkName("${dataSet[holder.adapterPosition].name}")).child("stock").setValue(originalStock.toString())
+                notifyDataSetChanged()
+            }
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -60,16 +112,31 @@ class AdminList_Adapter(val dataSet: MutableList<AllMenuStock>) :
     }
 
     fun convertBurgerName(name: String) : String {
-        return if (name.equals("불고기버거"))
-            "burger1"
-        else if (name.equals("치킨버거"))
-            "burger2"
-        else if (name.equals("리아미라클버거"))
-            "burger3"
-        else if (name.equals("베이컨 햄에그번"))
-            "burger4"
-        else
-            "undefined"
+        var idx = 0
+        for (i in hamsName) {
+            if (i.equals(name))
+                break
+            idx++
+        }
+        return hamsKey[idx]
+    }
+    fun convertDrinkName(name: String) : String {
+        var idx = 0
+        for (i in drinksName) {
+            if (i.equals(name))
+                break
+            idx++
+        }
+        return drinksKey[idx]
+    }
+    fun convertSideName(name: String) : String {
+        var idx = 0
+        for (i in sidesName) {
+            if (i.equals(name))
+                break
+            idx++
+        }
+        return sidesKey[idx]
     }
 
 }
