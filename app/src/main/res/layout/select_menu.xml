@@ -26,11 +26,13 @@
             android:id="@+id/spin_taste"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/bm_jua"/>
         <Spinner
             android:id="@+id/spin_patty"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bm_jua"/>
     </LinearLayout>
 
 
@@ -47,28 +49,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_round"
-            android:text="전체" />
+            android:text="전체"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
+            android:textColor="@color/black"/>
         <!--햄버거 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchHam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_round"
-            android:text="햄버거" />
+            android:text="햄버거"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
+            android:textColor="@color/black"/>
         <!--사이드 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchSide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_round"
-            android:text="사이드" />
+            android:text="사이드"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
+            android:textColor="@color/black"/>
         <!--음료 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchBev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_round"
-            android:text="음료" />
+            android:text="음료"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <LinearLayout
@@ -89,6 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="선택한 메뉴"
+        android:fontFamily="@font/bm_jua"
         android:textSize="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
@@ -120,8 +135,8 @@
             android:layout_width="66dp"
             android:layout_height="match_parent"
             android:text="주문하기"
-            android:textSize="15dp"
-            android:textStyle="bold"
+            android:fontFamily="@font/bm_jua"
+            android:textSize="18dp"
             android:background="@drawable/border_round_orange"/>
     </LinearLayout>
 
