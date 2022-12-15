@@ -186,35 +186,69 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
     fun convertBurgerName(name: String) : String {
-        return if (name.equals("불고기버거"))
-            "burger1"
-        else if (name.equals("치킨버거"))
-            "burger2"
-        else if (name.equals("리아미라클버거"))
-            "burger3"
-        else if (name.equals("베이컨 햄에그번"))
-            "burger4"
-        else
-            ""
+        val database = Firebase.database.reference
+        val hamsName = mutableListOf<String>()
+        val hamsKey = mutableListOf<String>()
+        database.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in snapshot.child("hamburger").children) {
+                    hamsName.add(i.child("name").getValue().toString())
+                    hamsKey.add(i.key.toString())
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        var idx = -1
+        for (i in hamsName) {
+            idx++
+            if (i.equals(String))
+                break
+        }
+        return hamsKey[idx]
     }
     fun convertDrinkName(name: String) : String {
-        return if (name.equals("콜라"))
-            "drink1"
-        else if (name.equals("사이다"))
-            "drink2"
-        else if (name.equals("밀크쉐이크"))
-            "drink3"
-        else
-            ""
+        val database = Firebase.database.reference
+        val drinksName = mutableListOf<String>()
+        val drinksKey = mutableListOf<String>()
+        database.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in snapshot.child("drink").children) {
+                    drinksName.add(i.child("name").getValue().toString())
+                    drinksKey.add(i.key.toString())
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        var idx = -1
+        for (i in drinksName) {
+            idx++
+            if (i.equals(String))
+                break
+        }
+        return drinksKey[idx]
     }
     fun convertSideName(name: String) : String {
-        return if (name.equals("포테이토"))
-            "side1"
-        else if (name.equals("치즈스틱"))
-            "side2"
-        else if (name.equals("소프트콘"))
-            "side3"
-        else
-            ""
+        val database = Firebase.database.reference
+        val sidesName = mutableListOf<String>()
+        val sidesKey = mutableListOf<String>()
+        database.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (i in snapshot.child("side").children) {
+                    sidesName.add(i.child("name").getValue().toString())
+                    sidesKey.add(i.key.toString())
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        var idx = -1
+        for (i in sidesName) {
+            idx++
+            if (i.equals(String))
+                break
+        }
+        return sidesKey[idx]
     }
 }
