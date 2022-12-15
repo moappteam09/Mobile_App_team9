@@ -21,4 +21,7 @@ class ChoosePersonalMenu : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 }

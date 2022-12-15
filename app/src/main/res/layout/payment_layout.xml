@@ -147,4 +147,15 @@
             android:background="@drawable/border_round"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/pay_gohome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="처음으로"
+        android:textSize="15dp"
+        android:layout_marginLeft="170dp"
+        android:backgroundTint="#FF9900"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/bm_jua"/>
+
 </LinearLayout>

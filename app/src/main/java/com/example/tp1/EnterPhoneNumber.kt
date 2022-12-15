@@ -95,4 +95,7 @@ class EnterPhoneNumber : AppCompatActivity() {
             printNum()
         }
     }
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 }

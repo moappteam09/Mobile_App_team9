@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tp1.MainActivity.Companion.list
 import com.example.tp1.databinding.MenuViewholderBinding
 import com.example.tp1.databinding.SelectMenuBinding
 import kotlinx.coroutines.NonDisposableHandle.parent
@@ -22,7 +23,6 @@ class ShowAll_ViewHolder (val binding : MenuViewholderBinding) : RecyclerView.Vi
 
 class ShowAll_Adapter(val dataSet : MutableList<AllMenu>, val type : Int, val binding2 : SelectMenuBinding) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var list = mutableListOf<AllMenu>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ShowAll_ViewHolder(MenuViewholderBinding.inflate(LayoutInflater.from(parent.context),
             parent, false))
