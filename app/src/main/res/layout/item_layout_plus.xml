@@ -21,13 +21,15 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:layout_marginLeft="10dp"
-            android:text="메뉴명" />
+            android:text="메뉴명"
+            android:fontFamily="@font/bm_jua"/>
         <Button
             android:id="@+id/orederDelete"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:textSize="15dp"
             android:text="X"
+            android:fontFamily="@font/bm_jua"
             android:textColor="#000000"
             android:backgroundTint="@color/white"
             android:layout_marginHorizontal="10dp"
@@ -44,6 +46,8 @@
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:text="+"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
             android:background="@drawable/border_round"/>
         <TextView
             android:id="@+id/ordercnt"
@@ -52,13 +56,16 @@
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
             android:textColor="#000000"
-            android:text="1" />
+            android:text="1"
+            android:fontFamily="@font/bm_jua"/>
         <android.widget.Button
             android:id="@+id/orderminus"
             android:layout_marginLeft="10dp"
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:text="-"
+            android:textSize="20dp"
+            android:fontFamily="@font/bm_jua"
             android:background="@drawable/border_round"/>
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +73,8 @@
             android:layout_marginLeft="60dp"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:text="금액 | " />
+            android:text="금액 | "
+            android:fontFamily="@font/bm_jua"/>
         <TextView
             android:id="@+id/orderprice"
             android:layout_width="wrap_content"
@@ -74,6 +82,7 @@
             android:layout_marginLeft="30dp"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:text="0000원" />
+            android:text="0000원"
+            android:fontFamily="@font/bm_jua"/>
     </LinearLayout>
 </LinearLayout>

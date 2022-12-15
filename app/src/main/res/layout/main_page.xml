@@ -12,50 +12,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="저희 매장에 처음 오셨나요?"
-        android:textSize="30dp"
+        android:textSize="35dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/bm_jua"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/main_btn1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="120dp"
         />
 
     <android.widget.Button
         android:id="@+id/main_btn1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="처음 방문했어요."
-        android:textSize="20dp"
-        android:textColor="@drawable/text_effect"
         android:background="@drawable/button_effect"
-        app:layout_constraintTop_toBottomOf="@+id/main_text"
+        android:text="처음 방문했어요."
+        android:textColor="@drawable/text_effect"
+        android:textSize="25dp"
+        android:fontFamily="@font/bm_jua"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@+id/main_btn2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
 
-        />
+        app:layout_constraintTop_toBottomOf="@+id/main_text" />
 
     <android.widget.Button
         android:id="@+id/main_btn2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="방문한 적이 있어요."
-        android:textSize="20dp"
-        android:textColor="@drawable/text_effect"
         android:background="@drawable/button_effect"
-        app:layout_constraintTop_toBottomOf="@+id/main_btn1"
+        android:text="방문한 적이 있어요."
+        android:textColor="@drawable/text_effect"
+        android:textSize="25dp"
+        android:fontFamily="@font/bm_jua"
         app:layout_constraintBottom_toTopOf="@id/main_btn3"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn1" />
 
     <android.widget.Button
         android:id="@+id/main_btn3"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="기존 키오스크를 이용할래요."
-        android:textSize="20dp"
+        android:textSize="25dp"
+        android:fontFamily="@font/bm_jua"
         android:textColor="@drawable/text_effect"
         android:background="@drawable/button_effect"
         app:layout_constraintTop_toBottomOf="@+id/main_btn2"

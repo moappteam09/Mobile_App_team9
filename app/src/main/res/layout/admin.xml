@@ -9,10 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="25dp"
         android:layout_margin="30dp"
         android:layout_gravity="center"
-        android:text="재고 관리 모드" />
+        android:text="재고 관리 모드"
+        android:fontFamily="@font/bm_jua"/>
 
     <androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -62,7 +63,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:textSize="22sp"
+            android:fontFamily="@font/bm_jua"
             android:textColor="#FFFFFF"
             android:background="@drawable/border_round_orange"
             android:paddingVertical="10dp"
@@ -82,7 +84,8 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/border_round_orange"
             android:paddingVertical="10dp"
-            android:text="확인" />
+            android:text="확인"
+            android:fontFamily="@font/bm_jua"/>
 
     </LinearLayout>
 
