@@ -61,41 +61,41 @@
             android:id="@+id/watchAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_round"
+            android:background="@drawable/button_effect"
             android:text="전체"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/black"/>
+            android:textColor="@drawable/text_effect"/>
         <!--햄버거 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchHam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_round"
+            android:background="@drawable/button_effect"
             android:text="햄버거"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/black"/>
+            android:textColor="@drawable/text_effect"/>
         <!--사이드 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchSide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_round"
+            android:background="@drawable/button_effect"
             android:text="사이드"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/black"/>
+            android:textColor="@drawable/text_effect"/>
         <!--음료 메뉴만 보기-->
         <android.widget.Button
             android:id="@+id/watchBev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_round"
+            android:background="@drawable/button_effect"
             android:text="음료"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/black"/>
+            android:textColor="@drawable/text_effect"/>
     </LinearLayout>
 
     <LinearLayout

@@ -172,7 +172,14 @@ class ShowMenu  : AppCompatActivity() {
             }
         })
         //전체 버튼을 눌렀을 경우, 햄버거와 사이드 음료 모든 메뉴를 리사이클러뷰로 보여줌
+        binding.watchAll.isSelected = true
         binding.watchAll.setOnClickListener() {
+            if(!binding.watchAll.isSelected){
+                binding.watchAll.isSelected = true
+                binding.watchHam.isSelected = false
+                binding.watchBev.isSelected = false
+                binding.watchSide.isSelected = false
+            }
             binding.spinPatty.visibility = View.VISIBLE
             binding.spinTaste.visibility = View.VISIBLE
             var afterall = ArrayList<AllMenu>()
@@ -229,6 +236,12 @@ class ShowMenu  : AppCompatActivity() {
 
         //햄버거 버튼을 눌렀을 경우 햄버거 메뉴를 보여줌
         binding.watchHam.setOnClickListener() {
+            if(!binding.watchHam.isSelected){
+                binding.watchAll.isSelected = false
+                binding.watchHam.isSelected = true
+                binding.watchBev.isSelected = false
+                binding.watchSide.isSelected = false
+            }
             binding.spinPatty.visibility = View.VISIBLE
             binding.spinTaste.visibility = View.VISIBLE
             var afterall = ArrayList<AllMenu>()
@@ -284,6 +297,12 @@ class ShowMenu  : AppCompatActivity() {
 
         //음료 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
         binding.watchBev.setOnClickListener() {
+            if(!binding.watchBev.isSelected){
+                binding.watchAll.isSelected = false
+                binding.watchHam.isSelected = false
+                binding.watchBev.isSelected = true
+                binding.watchSide.isSelected = false
+            }
             binding.spinPatty.visibility = View.INVISIBLE
             binding.spinTaste.visibility = View.INVISIBLE
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
@@ -292,6 +311,12 @@ class ShowMenu  : AppCompatActivity() {
 
         //사이드 버튼 클릭했을 때 DB에서 데이터 받아와서 넘겨주는 부분//
         binding.watchSide.setOnClickListener() {
+            if(!binding.watchSide.isSelected){
+                binding.watchAll.isSelected = false
+                binding.watchHam.isSelected = false
+                binding.watchBev.isSelected = false
+                binding.watchSide.isSelected = true
+            }
             binding.spinPatty.visibility = View.INVISIBLE
             binding.spinTaste.visibility = View.INVISIBLE
             binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)

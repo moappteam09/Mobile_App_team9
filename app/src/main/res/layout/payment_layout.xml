@@ -104,10 +104,10 @@
         android:layout_height="wrap_content"
         android:text="전화번호 입력"
         android:fontFamily="@font/bm_jua"
-        android:textColor="@color/white"
+        android:textColor="@drawable/text_effect_rev"
         android:textSize="24dp"
         android:padding="10dp"
-        android:background="@drawable/border_round_black"
+        android:background="@drawable/button_effect_rev"
         android:layout_gravity="center"/>
 
     <TextView
@@ -133,9 +133,9 @@
             android:text="신용/체크카드"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/white"
+            android:textColor="@drawable/text_effect"
             android:layout_marginRight="20dp"
-            android:background="@drawable/border_round_black"/>
+            android:background="@drawable/button_effect"/>
         <android.widget.Button
             android:id="@+id/giftPay"
             android:layout_width="150dp"
@@ -143,8 +143,8 @@
             android:text="상품권"
             android:textSize="20dp"
             android:fontFamily="@font/bm_jua"
-            android:textColor="@color/black"
-            android:background="@drawable/border_round"/>
+            android:textColor="@drawable/text_effect"
+            android:background="@drawable/button_effect"/>
     </LinearLayout>
 
     <Button
