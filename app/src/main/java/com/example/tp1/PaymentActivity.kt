@@ -34,6 +34,7 @@ class PaymentActivity : AppCompatActivity() {
         val binding = PaymentLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val database = Firebase.database.reference
         val phoneText1 = findViewById<TextView>(R.id.pay_phone_numbers1)
         val phoneText2 = findViewById<TextView>(R.id.pay_phone_numbers2)
@@ -46,6 +47,13 @@ class PaymentActivity : AppCompatActivity() {
         val totalPrice = intent.getIntExtra("totalPrice", 0)
         //val origStock = intent.getSerializableExtra("origStock") as ArrayList<AllMenuStock>
 
+
+        //처음으로 버튼 클릭시
+        binding.payGohome.setOnClickListener() {
+            MainActivity.list = mutableListOf<AllMenu>()
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         binding.totalOrder.setMovementMethod(ScrollingMovementMethod())
         if (orderSet != null) {
             for (i in orderSet.split(","))
@@ -220,6 +228,10 @@ class PaymentActivity : AppCompatActivity() {
         binding.giftPay.setOnClickListener {
             payMethod()
         }
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
     }
     fun convertBurgerName(name: String) : String {
         var idx = 0

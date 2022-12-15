@@ -140,6 +140,9 @@ class AdminList  : AppCompatActivity() {
         }
 
     }
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 
     fun calcSoldQuantity(kind: String, left: String, name: String, origStock: ArrayList<AllMenuStock>): Int {
 //        for(i : AllMenuStock in origStock){

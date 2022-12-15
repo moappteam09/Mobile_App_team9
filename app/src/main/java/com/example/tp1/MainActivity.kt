@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
     companion object {
         var orderlist = mutableListOf<orderSet>()//orderSet전역변수로 선언
+        var list = mutableListOf<AllMenu>()
     }
     lateinit var database : DatabaseReference
     var origStock2 = ArrayList<AllMenuStock>()
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("origstock", "${i.kind} , ${i.name} , ${i.price} , ${i.left}")
             }
             startActivity(intent)
+
         }
 
         val normalKiosk = findViewById<Button>(R.id.main_btn3)
@@ -104,5 +106,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ShowMenu::class.java)
             startActivity(intent)
         }
+    }
+    override fun onBackPressed() {
+//        super.onBackPressed()
     }
 }

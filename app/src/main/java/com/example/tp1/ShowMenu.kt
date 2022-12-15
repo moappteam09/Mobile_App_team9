@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tp1.MainActivity.Companion.list
 import com.example.tp1.MainActivity.Companion.orderlist
 import com.example.tp1.databinding.ItemLayoutPlusBinding
 import com.example.tp1.databinding.SelectMenuBinding
@@ -71,6 +72,13 @@ class ShowMenu  : AppCompatActivity() {
 
         var all_hamburger = Firebase.database.reference// 파이어베이스 DB객체를 레퍼런스함.
 
+
+        //처음으로 버튼 클릭 시
+        binding.menuGohome.setOnClickListener() {
+            list = mutableListOf<AllMenu>()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         //일단 DB에 있는 모든 메뉴들을 불러와서 저장해놓기 (전체 메뉴를 보여주기 위함)
         all_hamburger.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -294,6 +302,7 @@ class ShowMenu  : AppCompatActivity() {
 
         val order = findViewById <Button>(R.id.btn_buy)  //주문하기 버튼
         order.setOnClickListener{
+            list = ArrayList<AllMenu>()
             if (orderListToPay.ham.size > 0 || orderListToPay.side.size > 0 || orderListToPay.drink.size > 0) {
                 val intent = Intent(this, PaymentActivity::class.java)
                 intent.putExtra("whereFrom", 1)
@@ -415,6 +424,9 @@ class ShowMenu  : AppCompatActivity() {
 
 
     }
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 }
 class orderMenuHolder (val binding : ItemLayoutPlusBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -425,7 +437,7 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("OrderSet", "name : ${dataSet[position]}")
+//        Log.d("OrderSet", "name : ${dataSet[position]}")
         Log.d("dataSize", "size : ${dataSet.size}")
         val viewholder = (holder as orderMenuHolder).binding
         //companion object를 이용해 전역변수로 선언한 var orderlist = mutableListOf<orderSet>() 사용
@@ -437,7 +449,7 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
         //이제 위의 리스트에 멤버를 다 넣은 다음에
         //orderlist에 마지막에 다 넣어서 주문하기 버튼을 누르면 intent로 넘겨준다
         for(i in 0..dataSet.size-1) {
-            Log.d("CheckData", "OrderCount : ${dataSet[position].orderCount}")
+//            Log.d("CheckData", "OrderCount : ${dataSet[position].orderCount}")
         }
         for(i in 0..dataSet.size-1) {
             if(dataSet[i].type==0) { //DataSet안에 들어있는 놈이 햄버거라면
@@ -448,7 +460,7 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
                     , dataSet[i].taste
                     , 0
                     , dataSet[i].orderCount))
-                Log.d("OrderSet", "Ham : ${dataSet[i].orderCount}")
+//                Log.d("OrderSet", "Ham : ${dataSet[i].orderCount}")
             }
             else if(dataSet[i].type==1) { //DataSet안에 들어있는 놈이 사이드라면
                 orderside.add(Side(dataSet[i].image
@@ -485,11 +497,16 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
             notifyDataSetChanged()
         }
         viewholder.orderminus.setOnClickListener() {
-            viewholder.ordercnt.text = (viewholder.ordercnt.text.toString().toInt() - 1).toString()
-            dataSet[position].orderCount = viewholder.ordercnt.text.toString().toInt()
-            Log.d("MinusBtn", "Cnt : ${dataSet[position].orderCount}")
-            viewholder.orderprice.text = (dataSet[position].price.toInt() * dataSet[position].orderCount).toString()
-            notifyDataSetChanged()
+            if(viewholder.ordercnt.text.equals("1")) {
+
+            }
+            else {
+                viewholder.ordercnt.text = (viewholder.ordercnt.text.toString().toInt() - 1).toString()
+                dataSet[position].orderCount = viewholder.ordercnt.text.toString().toInt()
+                Log.d("MinusBtn", "Cnt : ${dataSet[position].orderCount}")
+                viewholder.orderprice.text = (dataSet[position].price.toInt() * dataSet[position].orderCount).toString()
+                notifyDataSetChanged()
+            }
         }
         //주문하기 버튼을 클릭했을 때 dataSet에 담긴 녀석들의 정보를 orderSet으로 전달해주어야 한다.
 
