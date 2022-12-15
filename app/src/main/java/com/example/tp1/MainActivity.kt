@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var orderlist = mutableListOf<orderSet>()//orderSet전역변수로 선언
         var list = mutableListOf<AllMenu>()
+        var clicked = 0
     }
     lateinit var database : DatabaseReference
     var origStock2 = ArrayList<AllMenuStock>()

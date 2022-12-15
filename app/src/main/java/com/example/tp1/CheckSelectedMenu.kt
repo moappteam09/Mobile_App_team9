@@ -109,7 +109,8 @@ class CheckSelectedMenu : AppCompatActivity() {
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
                                         k.child("price").getValue().toString(),
-                                        orderCount
+                                        orderCount,
+                                        k.child("stock").getValue().toString().toInt()
                                     )
                                 )
                             }
@@ -120,7 +121,8 @@ class CheckSelectedMenu : AppCompatActivity() {
                                         k.child("image").getValue().toString(),
                                         k.child("name").getValue().toString(),
                                         k.child("price").getValue().toString(),
-                                        orderCount
+                                        orderCount,
+                                        k.child("stock").getValue().toString().toInt()
                                     )
                                 )
                             }

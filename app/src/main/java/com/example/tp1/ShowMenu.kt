@@ -1,5 +1,7 @@
 package com.example.tp1
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.renderscript.Sampler.Value
@@ -13,13 +15,16 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tp1.MainActivity.Companion.clicked
 import com.example.tp1.MainActivity.Companion.list
 import com.example.tp1.MainActivity.Companion.orderlist
+import com.example.tp1.databinding.DescriptionLayoutBinding
 import com.example.tp1.databinding.ItemLayoutPlusBinding
 import com.example.tp1.databinding.SelectMenuBinding
 import com.google.firebase.database.DataSnapshot
@@ -28,11 +33,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 //메뉴를 선택하는 화면을 보여주는 클래스
 //spinner구현해야함
 
 lateinit var orderListToPay: orderSet
+val descriptions = mutableListOf<String>()
+val names = mutableListOf<String>()
 
 class ShowMenu  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
@@ -82,6 +90,13 @@ class ShowMenu  : AppCompatActivity() {
         //일단 DB에 있는 모든 메뉴들을 불러와서 저장해놓기 (전체 메뉴를 보여주기 위함)
         all_hamburger.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                descriptions.clear()
+                names.clear()
+                for (i in snapshot.child("hamburger").children) {
+                    names.add(i.child("name").getValue().toString())
+                    descriptions.add(i.child("description").getValue().toString())
+                    // Log.d("debug", i.child("name").getValue().toString() + " " + i.child("description").getValue().toString())
+                }
                 for(ds in snapshot.children) {
                     when {
                         "hamburger".equals(ds.key) -> {
@@ -110,8 +125,9 @@ class ShowMenu  : AppCompatActivity() {
                                 var image : String = item.child("image").value as String
                                 var name : String = item.child("name").value as String
                                 var price : String = item.child("price").value as String
+                                var left : String = item.child("stock").value as String
                                 //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price, "", "",0, 1, 2 ))
+                                alllist.add(AllMenu(image, name, price, "", "",left.toInt(), 1, 2 ))
                             }
                         }
                     }
@@ -125,8 +141,9 @@ class ShowMenu  : AppCompatActivity() {
                                 var image : String = item.child("image").value as String
                                 var name : String = item.child("name").value as String
                                 var price : String = item.child("price").value as String
+                                var left : String = item.child("stock").value as String
                                 //받은 데이터를 Allmenu클래스에 담기
-                                alllist.add(AllMenu(image, name, price, "", "", 0, 1, 1))
+                                alllist.add(AllMenu(image, name, price, "", "", left.toInt(), 1, 1))
                             }
                         }
                     }
@@ -252,9 +269,9 @@ class ShowMenu  : AppCompatActivity() {
                             afterall.add(alllist[i])
                         }
                     }
-                    else {
-                        afterall.add(alllist[i])
-                    }
+//                    else {
+//                        afterall.add(alllist[i])
+//                    }
                 }
                 binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
                 binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1, binding)
@@ -267,9 +284,9 @@ class ShowMenu  : AppCompatActivity() {
                             afterall.add(alllist[i])
                         }
                     }
-                    else {
-                        afterall.add(alllist[i])
-                    }
+//                    else {
+//                        afterall.add(alllist[i])
+//                    }
                 }
                 binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
                 binding.menuRecycler.adapter = ShowAll_Adapter(afterall, -1, binding)
@@ -348,7 +365,41 @@ class ShowMenu  : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 //문자열로 패티 종류 저장되어있음 binding.spinPatty.selectedItem
                 //문자열로 맛 종류 저장되어있음 binding.spinTaste.selectedItem
-                if(binding.spinPatty.selectedItem.equals("전체")) {
+                if(binding.watchHam.isSelected) {
+                    if(binding.spinPatty.selectedItem.equals("전체")) {
+                        var spinchangePatty = ArrayList<AllMenu>()
+                        for(i in 0..alllist.size-1) {
+                            if(alllist[i].type == 0) {
+                                if(binding.spinTaste.selectedItem.equals("전체")) {
+                                    spinchangePatty.add(alllist[i])
+                                }
+                                else if (alllist[i].taste.equals(binding.spinTaste.selectedItem)) {
+                                    spinchangePatty.add(alllist[i])
+                                }
+                            }
+                        }
+                        binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
+                        binding.menuRecycler.adapter = ShowAll_Adapter(spinchangePatty, -1, binding)
+                    }
+                    else {
+                        var spinchangePatty = ArrayList<AllMenu>()
+                        for(i in 0..alllist.size-1) {
+                            if(alllist[i].type==0) {
+                                if(binding.spinTaste.selectedItem.equals("전체")) {
+                                    if(alllist[i].patty.equals(binding.spinPatty.selectedItem)) {
+                                        spinchangePatty.add(alllist[i])
+                                    }
+                                }
+                                else if(alllist[i].patty.equals(binding.spinPatty.selectedItem) && alllist[i].taste.equals(binding.spinTaste.selectedItem)) {
+                                    spinchangePatty.add(alllist[i])
+                                }
+                            }
+                        }
+                        binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
+                        binding.menuRecycler.adapter = ShowAll_Adapter(spinchangePatty, -1, binding)
+                    }
+                }
+                else if(binding.spinPatty.selectedItem.equals("전체")) {
                     var spinchangePatty = ArrayList<AllMenu>()
                     for(i in 0..alllist.size-1) {
                         if(alllist[i].type == 0) {
@@ -398,7 +449,42 @@ class ShowMenu  : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 //문자열로 패티 종류 저장되어있음 binding.spinPatty.selectedItem
                 //문자열로 맛 종류 저장되어있음 binding.spinTaste.selectedItem
-                if(binding.spinTaste.selectedItem.equals("전체")) {
+                if(binding.watchHam.isSelected) {
+                    if(binding.spinTaste.selectedItem.equals("전체")) {
+                        var spinchangeTaste = ArrayList<AllMenu>()
+                        for(i in 0..alllist.size-1) {
+                            //햄버거만 체크해주면 됨!
+                            if(alllist[i].type == 0) {
+                                if(binding.spinPatty.selectedItem.equals("전체")) {
+                                    spinchangeTaste.add(alllist[i])
+                                }
+                                else if (alllist[i].patty.equals(binding.spinPatty.selectedItem)) {
+                                    spinchangeTaste.add(alllist[i])
+                                }
+                            }
+                        }
+                        binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
+                        binding.menuRecycler.adapter = ShowAll_Adapter(spinchangeTaste, -1, binding)
+                    }
+                    else {
+                        var spinchangeTaste = ArrayList<AllMenu>()
+                        for(i in 0..alllist.size-1) {
+                            if(alllist[i].type == 0) {
+                                if(binding.spinPatty.selectedItem.equals("전체")) {
+                                    if(alllist[i].taste.equals(binding.spinTaste.selectedItem)) {
+                                        spinchangeTaste.add(alllist[i])
+                                    }
+                                }
+                                else if(alllist[i].patty.equals(binding.spinPatty.selectedItem) && alllist[i].taste.equals(binding.spinTaste.selectedItem)) {
+                                    spinchangeTaste.add(alllist[i])
+                                }
+                            }
+                        }
+                        binding.menuRecycler.layoutManager = GridLayoutManager(this@ShowMenu, 3)
+                        binding.menuRecycler.adapter = ShowAll_Adapter(spinchangeTaste, -1, binding)
+                    }
+                }
+                else if(binding.spinTaste.selectedItem.equals("전체")) {
                     var spinchangeTaste = ArrayList<AllMenu>()
                     for(i in 0..alllist.size-1) {
                         //햄버거만 체크해주면 됨!
@@ -455,7 +541,7 @@ class ShowMenu  : AppCompatActivity() {
 }
 class orderMenuHolder (val binding : ItemLayoutPlusBinding) : RecyclerView.ViewHolder(binding.root)
 
-class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class orderMenu_Adapter(val dataSet : MutableList<AllMenu>, val dialog_bind : SelectMenuBinding) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return orderMenuHolder(ItemLayoutPlusBinding.inflate(LayoutInflater.from(parent.context),
         parent, false))
@@ -491,13 +577,15 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
                 orderside.add(Side(dataSet[i].image
                     , dataSet[i].name
                     , dataSet[i].price
-                    , dataSet[i].orderCount))
+                    , dataSet[i].orderCount
+                    , 0))
             }
             else if(dataSet[i].type==2) { //DataSet안에 들어있는 놈이 음료라면
                 orderdrink.add(Drink(dataSet[i].image
                     , dataSet[i].name
                     , dataSet[i].price
-                    , dataSet[i].orderCount))
+                    , dataSet[i].orderCount
+                    , 0))
             }
         }
         orderlist.add(orderSet(orderham, orderdrink, orderside))
@@ -508,6 +596,32 @@ class orderMenu_Adapter(val dataSet : MutableList<AllMenu>) : RecyclerView.Adapt
         Glide.with(holder.itemView)
             .load(dataSet[position].image)
             .into(viewholder.orderimg)
+
+        viewholder.orderimg.setOnClickListener {
+            if (dataSet[position].type == 0) {
+                val dialogBinding =
+                    DescriptionLayoutBinding.inflate(LayoutInflater.from(this@orderMenu_Adapter.dialog_bind.selectmenuRecycler.context))
+                AlertDialog.Builder(this@orderMenu_Adapter.dialog_bind.selectmenuRecycler.context)
+                    .run {
+                        setTitle("Description")
+                        var idx = 0
+                        for (i in names) {
+                            if (i.equals(dataSet[position].name))
+                                break
+                            idx++
+                        }
+                        Glide.with(holder.itemView)
+                            .load(dataSet[position].image)
+                            .into(dialogBinding.descriptionImg)
+                        dialogBinding.descriptionName.text = names[idx]
+                        dialogBinding.descriptionContent.text = descriptions[idx].split("$")[0] + " " + descriptions[idx].split("$")[2] + "kcal"
+                        dialogBinding.descriptionAllergy.text = descriptions[idx].split("$")[1]
+                        setView(dialogBinding.root)
+                        setPositiveButton("닫기", null)
+                        show()
+                    }
+            }
+        }
         viewholder.ordername.text = dataSet[position].name
         viewholder.orderprice.text = (dataSet[position].price.toInt()*dataSet[position].orderCount).toString()
         viewholder.ordercnt.text = dataSet[position].orderCount.toString()
