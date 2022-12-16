@@ -43,6 +43,11 @@ class ShowAll_Adapter(val dataSet : MutableList<AllMenu>, val type : Int, val bi
                     .into(binding.menuImg)
                 binding.menuName.text = "${dataSet[position].name}"
                 binding.menuPrice.text = "${dataSet[position].price}"
+                if(dataSet[position].left == 0 && dataSet[position].type == 0) {
+                    binding.menuImg.alpha = 0.5F
+                    binding.menuName.alpha = 0.5F
+                    binding.menuPrice.alpha = 0.5F
+                }
             }
             type == 0 -> { // 햄버거만 보여주는 경우라면?
                 Glide.with(holder.itemView)
@@ -50,6 +55,11 @@ class ShowAll_Adapter(val dataSet : MutableList<AllMenu>, val type : Int, val bi
                     .into(binding.menuImg)
                 binding.menuName.text = "${dataSet[position].name}"
                 binding.menuPrice.text = "${dataSet[position].price}"
+                if(dataSet[position].left == 0) {
+                    binding.menuImg.alpha = 0.5F
+                    binding.menuName.alpha = 0.5F
+                    binding.menuPrice.alpha = 0.5F
+                }
             }
             type == 1 -> {
                 Glide.with(holder.itemView)
@@ -69,41 +79,49 @@ class ShowAll_Adapter(val dataSet : MutableList<AllMenu>, val type : Int, val bi
         //dataSet안의 값으로 type이 있으니, 그것으로 햄버거인지(0), 사이드인지(1), 음료인지(2) 판단하자
         holder.itemView.setOnClickListener() {
             Log.d("Clicked Item Inform", "name : ${dataSet[position].name}, price : ${dataSet[position].price}, type : ${dataSet[position].type}")
-            if(dataSet[position].type==0) { //햄버거를 담았을 경우 Hamburger클래스에 추가
-                list.add(dataSet[position])
-                binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
-                binding2.selectmenuRecycler.addItemDecoration(
-                    DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
-                        LinearLayoutManager.VERTICAL
+
+            if(dataSet[position].left==0 && dataSet[position].type==0) {
+
+            }
+            else {
+                if(dataSet[position].type==0) { //햄버거를 담았을 경우 Hamburger클래스에 추가
+                    list.add(dataSet[position])
+                    binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
+                    binding2.selectmenuRecycler.addItemDecoration(
+                        DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
+                            LinearLayoutManager.VERTICAL
+                        )
                     )
-                )
 //                var hamname = dataSet[position].name
 //                var hamprice = dataSet[position].price
 //                hamlist.add(Hamburger("", hamname, hamprice, "", "", 0, 0))
 
-            }
-            else if(dataSet[position].type==1) { //사이드를 담았을 경우 Side클래스에 추가
-                list.add(dataSet[position])
-                binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
-                binding2.selectmenuRecycler.addItemDecoration(
-                    DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
-                        LinearLayoutManager.VERTICAL
+                }
+                else if(dataSet[position].type==1) { //사이드를 담았을 경우 Side클래스에 추가
+                    list.add(dataSet[position])
+                    binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
+                    binding2.selectmenuRecycler.addItemDecoration(
+                        DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
+                            LinearLayoutManager.VERTICAL
+                        )
                     )
-                )
 //                var sidename = dataSet[position].name
 //                var sideprice = dataSet[position].price
 //                sidelist.add(Side("", sidename, sideprice, 0))
-            }
-            else if(dataSet[position].type==2) { //음료를 담았을 경우 Drink 클래스에 추가
-                list.add(dataSet[position])
-                Log.d("listsize", "listSize : ${list.size}")
-                binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
-                binding2.selectmenuRecycler.addItemDecoration(
-                    DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
-                        LinearLayoutManager.VERTICAL
+                }
+                else if(dataSet[position].type==2) { //음료를 담았을 경우 Drink 클래스에 추가
+                    list.add(dataSet[position])
+                    Log.d("listsize", "listSize : ${list.size}")
+                    binding2.selectmenuRecycler.adapter = orderMenu_Adapter(list)
+                    binding2.selectmenuRecycler.addItemDecoration(
+                        DividerItemDecoration(this@ShowAll_Adapter.binding2.selectmenuRecycler.context,
+                            LinearLayoutManager.VERTICAL
+                        )
                     )
-                )
+                }
             }
+
+
         }
 
 
